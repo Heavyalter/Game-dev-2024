@@ -48,6 +48,7 @@
                 ctx.strokeStyle = 'red';
                 ctx.strokeRect(snake[i].x, snake[i].y, box, box);
             }
+
             ctx.fillStyle = 'red';
             ctx.fillRect(food.x, food.y, box, box);
 
@@ -61,7 +62,10 @@
 
             if (snakeX == food.x && snakeY == food.y) {
                 score++;
-                food = { x: Math.floor(Math.random() * 19 + 1) * box, y: Math.floor(Math.random() * 19 + 1) * box };
+                food = {
+                    x: Math.floor(Math.random() * 19 + 1) * box,
+                    y: Math.floor(Math.random() * 19 + 1) * box
+                };
             } else {
                 snake.pop();
             }
@@ -73,6 +77,10 @@
             }
 
             snake.unshift(newHead);
+
+            ctx.fillStyle = 'black';
+            ctx.font = '45px Changa one';
+            ctx.fillText(score, 2 * box, 1.6 * box);
         }
 
         function collision(head, array) {
