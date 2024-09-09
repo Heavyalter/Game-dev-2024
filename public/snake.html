@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game with Camera</title>
+    <title>Snake Game with Camera, Boss, and Ghost</title>
     <style>
         body { display: flex; flex-direction: column; align-items: center; }
         video, canvas { border: 1px solid black; margin: 10px; }
@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <h1>Snake Game with Camera</h1>
+    <h1>Snake Game with Camera, Boss, and Ghost</h1>
     <video id="video" width="320" height="240" autoplay></video>
     <canvas id="gameCanvas" width="300" height="300"></canvas>
     <div id="controls">
@@ -34,8 +34,11 @@
         const box = 20;
         let snake = [{ x: 7 * box, y: 7 * box }];
         let food = { x: Math.floor(Math.random() * 14 + 1) * box, y: Math.floor(Math.random() * 14 + 1) * box };
+        let boss = { x: Math.floor(Math.random() * 14 + 1) * box, y: Math.floor(Math.random() * 14 + 1) * box };
+        let ghost = { x: Math.floor(Math.random() * 14 + 1) * box, y: Math.floor(Math.random() * 14 + 1) * box };
         let direction = 'RIGHT';
         let score = 0;
+        let bossActive = false;
 
         document.addEventListener('keydown', event => {
             if (event.keyCode == 37 && direction != 'RIGHT') direction = 'LEFT';
@@ -56,6 +59,16 @@
             ctx.fillStyle = 'red';
             ctx.fillRect(food.x, food.y, box, box);
 
+            if (bossActive) {
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(boss.x, boss.y, box, box);
+                moveBoss();
+            }
+
+            ctx.fillStyle = 'gray';
+            ctx.fillRect(ghost.x, ghost.y, box, box);
+            moveGhost();
+
             let snakeX = snake[0].x;
             let snakeY = snake[0].y;
 
@@ -70,13 +83,14 @@
                     x: Math.floor(Math.random() * 14 + 1) * box,
                     y: Math.floor(Math.random() * 14 + 1) * box
                 };
+                if (score >= 5) bossActive = true;
             } else {
                 snake.pop();
             }
 
             let newHead = { x: snakeX, y: snakeY };
 
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (bossActive && collision(newHead, [boss])) || collision(newHead, [ghost])) {
                 clearInterval(game);
             }
 
@@ -85,6 +99,25 @@
             ctx.fillStyle = 'black';
             ctx.font = '30px Changa one';
             ctx.fillText(score, 2 * box, 1.6 * box);
+        }
+
+        function moveBoss() {
+            const directions = ['LEFT', 'UP', 'RIGHT', 'DOWN'];
+            const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+            if (randomDirection == 'LEFT' && boss.x > 0) boss.x -= box;
+            if (randomDirection == 'UP' && boss.y > 0) boss.y -= box;
+            if (randomDirection == 'RIGHT' && boss.x < canvas.width - box) boss.x += box;
+            if (randomDirection == 'DOWN' && boss.y < canvas.height - box) boss.y += box;
+        }
+
+        function moveGhost() {
+            let dx = snake[0].x - ghost.x;
+            let dy = snake[0].y - ghost.y;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                ghost.x += (dx > 0) ? box : -box;
+            } else {
+                ghost.y += (dy > 0) ? box : -box;
+            }
         }
 
         function collision(head, array) {
@@ -101,6 +134,9 @@
             direction = 'RIGHT';
             score = 0;
             food = { x: Math.floor(Math.random() * 14 + 1) * box, y: Math.floor(Math.random() * 14 + 1) * box };
+            boss = { x: Math.floor(Math.random() * 14 + 1) * box, y: Math.floor(Math.random() * 14 + 1) * box };
+            ghost = { x: Math.floor(Math.random() * 14 + 1) * box, y: Math.floor(Math.random() * 14 + 1) * box };
+            bossActive = false;
             clearInterval(game);
             game = setInterval(draw, 100);
         }
