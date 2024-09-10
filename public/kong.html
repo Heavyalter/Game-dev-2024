@@ -32,15 +32,19 @@
             onGround: false
         };
 
-        const platform = {
-            x: 100,
-            y: 500,
-            width: 600,
-            height: 20,
-            color: 'brown'
-        };
+        const platforms = [
+            { x: 100, y: 500, width: 600, height: 20, color: 'brown' },
+            { x: 200, y: 400, width: 400, height: 20, color: 'brown' },
+            { x: 300, y: 300, width: 200, height: 20, color: 'brown' }
+        ];
 
-        function drawPlatform() {
+        const barrels = [
+            { x: 800, y: 480, width: 20, height: 20, color: 'red', speed: -2 }
+        ];
+
+        const goal = { x: 350, y: 260, width: 40, height: 40, color: 'green' };
+
+        function drawPlatform(platform) {
             ctx.fillStyle = platform.color;
             ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
         }
@@ -48,6 +52,16 @@
         function drawPlayer() {
             ctx.fillStyle = player.color;
             ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        function drawBarrel(barrel) {
+            ctx.fillStyle = barrel.color;
+            ctx.fillRect(barrel.x, barrel.y, barrel.width, barrel.height);
+        }
+
+        function drawGoal() {
+            ctx.fillStyle = goal.color;
+            ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
         }
 
         function clear() {
@@ -63,26 +77,53 @@
                 player.dy += player.gravity;
             }
 
-            // Collision with platform
-            if (player.y + player.height > platform.y && player.x < platform.x + platform.width && player.x + player.width > platform.x) {
-                player.y = platform.y - player.height;
-                player.dy = 0;
-                player.onGround = true;
-            } else {
-                player.onGround = false;
+            // Collision with platforms
+            player.onGround = false;
+            for (const platform of platforms) {
+                if (player.y + player.height > platform.y && player.y < platform.y + platform.height && player.x < platform.x + platform.width && player.x + player.width > platform.x) {
+                    player.y = platform.y - player.height;
+                    player.dy = 0;
+                    player.onGround = true;
+                }
             }
 
             // Prevent going out of canvas
             if (player.x < 0) player.x = 0;
             if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
             if (player.y + player.height > canvas.height) player.y = canvas.height - player.height;
+
+            // Check for win condition
+            if (player.x < goal.x + goal.width && player.x + player.width > goal.x && player.y < goal.y + goal.height && player.y + player.height > goal.y) {
+                alert('You win!');
+                document.location.reload();
+            }
+        }
+
+        function updateBarrels() {
+            for (const barrel of barrels) {
+                barrel.x += barrel.speed;
+
+                // Reset barrel position if it goes off screen
+                if (barrel.x + barrel.width < 0) {
+                    barrel.x = canvas.width;
+                }
+
+                // Check for collision with player
+                if (player.x < barrel.x + barrel.width && player.x + player.width > barrel.x && player.y < barrel.y + barrel.height && player.y + player.height > barrel.y) {
+                    alert('Game Over!');
+                    document.location.reload();
+                }
+            }
         }
 
         function update() {
             clear();
-            drawPlatform();
+            platforms.forEach(drawPlatform);
             drawPlayer();
+            barrels.forEach(drawBarrel);
+            drawGoal();
             newPos();
+            updateBarrels();
             requestAnimationFrame(update);
         }
 
