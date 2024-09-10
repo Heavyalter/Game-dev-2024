@@ -18,18 +18,27 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
+        const playerImg = new Image();
+        playerImg.src = 'path/to/player.png'; // Replace with your player sprite
+
+        const barrelImg = new Image();
+        barrelImg.src = 'path/to/barrel.png'; // Replace with your barrel sprite
+
+        const goalImg = new Image();
+        goalImg.src = 'path/to/goal.png'; // Replace with your goal sprite
+
         const player = {
             x: 150,
             y: 460,
             width: 40,
             height: 40,
-            color: 'blue',
             speed: 5,
             dx: 0,
             dy: 0,
             gravity: 0.5,
             jumpPower: -10,
-            onGround: false
+            jumps: 0,
+            maxJumps: 2
         };
 
         const platforms = [
@@ -39,10 +48,10 @@
         ];
 
         const barrels = [
-            { x: 800, y: 480, width: 20, height: 20, color: 'red', speed: -2 }
+            { x: 800, y: 480, width: 20, height: 20, speed: -2 }
         ];
 
-        const goal = { x: 350, y: 260, width: 40, height: 40, color: 'green' };
+        const goal = { x: 350, y: 260, width: 40, height: 40 };
 
         function drawPlatform(platform) {
             ctx.fillStyle = platform.color;
@@ -50,18 +59,15 @@
         }
 
         function drawPlayer() {
-            ctx.fillStyle = player.color;
-            ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
         }
 
         function drawBarrel(barrel) {
-            ctx.fillStyle = barrel.color;
-            ctx.fillRect(barrel.x, barrel.y, barrel.width, barrel.height);
+            ctx.drawImage(barrelImg, barrel.x, barrel.y, barrel.width, barrel.height);
         }
 
         function drawGoal() {
-            ctx.fillStyle = goal.color;
-            ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
+            ctx.drawImage(goalImg, goal.x, goal.y, goal.width, goal.height);
         }
 
         function clear() {
@@ -73,9 +79,7 @@
             player.y += player.dy;
 
             // Gravity
-            if (!player.onGround) {
-                player.dy += player.gravity;
-            }
+            player.dy += player.gravity;
 
             // Collision with platforms
             player.onGround = false;
@@ -84,6 +88,7 @@
                     player.y = platform.y - player.height;
                     player.dy = 0;
                     player.onGround = true;
+                    player.jumps = 0; // Reset jumps when on ground
                 }
             }
 
@@ -136,9 +141,9 @@
         }
 
         function jump() {
-            if (player.onGround) {
+            if (player.jumps < player.maxJumps) {
                 player.dy = player.jumpPower;
-                player.onGround = false;
+                player.jumps++;
             }
         }
 
