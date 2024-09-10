@@ -7,6 +7,8 @@
     <style>
         canvas {
             border: 1px solid black;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -16,15 +18,109 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Example: Draw a simple platform
-        ctx.fillStyle = 'brown';
-        ctx.fillRect(100, 500, 600, 20);
+        const player = {
+            x: 150,
+            y: 460,
+            width: 40,
+            height: 40,
+            color: 'blue',
+            speed: 5,
+            dx: 0,
+            dy: 0,
+            gravity: 0.5,
+            jumpPower: -10,
+            onGround: false
+        };
 
-        // Example: Draw a simple character
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(150, 460, 40, 40);
+        const platform = {
+            x: 100,
+            y: 500,
+            width: 600,
+            height: 20,
+            color: 'brown'
+        };
 
-        // Add more game logic here...
+        function drawPlatform() {
+            ctx.fillStyle = platform.color;
+            ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+        }
+
+        function drawPlayer() {
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        function clear() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function newPos() {
+            player.x += player.dx;
+            player.y += player.dy;
+
+            // Gravity
+            if (!player.onGround) {
+                player.dy += player.gravity;
+            }
+
+            // Collision with platform
+            if (player.y + player.height > platform.y && player.x < platform.x + platform.width && player.x + player.width > platform.x) {
+                player.y = platform.y - player.height;
+                player.dy = 0;
+                player.onGround = true;
+            } else {
+                player.onGround = false;
+            }
+
+            // Prevent going out of canvas
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+            if (player.y + player.height > canvas.height) player.y = canvas.height - player.height;
+        }
+
+        function update() {
+            clear();
+            drawPlatform();
+            drawPlayer();
+            newPos();
+            requestAnimationFrame(update);
+        }
+
+        function moveRight() {
+            player.dx = player.speed;
+        }
+
+        function moveLeft() {
+            player.dx = -player.speed;
+        }
+
+        function jump() {
+            if (player.onGround) {
+                player.dy = player.jumpPower;
+                player.onGround = false;
+            }
+        }
+
+        function keyDown(e) {
+            if (e.key === 'ArrowRight' || e.key === 'd') {
+                moveRight();
+            } else if (e.key === 'ArrowLeft' || e.key === 'a') {
+                moveLeft();
+            } else if (e.key === 'ArrowUp' || e.key === 'w') {
+                jump();
+            }
+        }
+
+        function keyUp(e) {
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'ArrowLeft' || e.key === 'a') {
+                player.dx = 0;
+            }
+        }
+
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
+
+        update();
     </script>
 </body>
 </html>
