@@ -166,7 +166,13 @@
         document.addEventListener('keydown', keyDown);
         document.addEventListener('keyup', keyUp);
 
-        update();
+        playerImg.onload = () => {
+            barrelImg.onload = () => {
+                goalImg.onload = () => {
+                    update();
+                };
+            };
+        };
     </script>
 </body>
 </html>
