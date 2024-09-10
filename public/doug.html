@@ -21,15 +21,15 @@
         .container {
             padding: 2em;
         }
-        .video {
+        .video, .project, .image {
             margin-bottom: 2em;
         }
-        .video iframe {
+        .video iframe, .image img {
             width: 100%;
-            height: 315px;
+            height: auto;
         }
-        .project {
-            margin-bottom: 2em;
+        .image img {
+            border: 2px solid #ff6347;
         }
     </style>
 </head>
@@ -60,7 +60,17 @@
                 <p>Watch DougDoug's live streams on Twitch: <a href="https://www.twitch.tv/dougdoug">Twitch Channel</a></p>
             </div>
         </section>
+        <section class="images">
+            <h2>Gallery</h2>
+            <div class="image">
+                <h3>DougDoug in Action</h3>
+                <img src="https://example.com/dougdoug-action.jpg" alt="DougDoug in Action">
+            </div>
+            <div class="image">
+                <h3>DougDoug's Setup</h3>
+                <img src="https://example.com/dougdoug-setup.jpg" alt="DougDoug's Setup">
+            </div>
+        </section>
     </div>
 </body>
 </html>
-
