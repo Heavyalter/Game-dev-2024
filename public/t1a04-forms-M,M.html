@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #bb86fc;
+        }
+        a {
+            color: #03dac6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            color: #ffffff;
+        }
+        input[type="submit"] {
+            background-color: #bb86fc;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #9a67ea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Main Stuff</h2>
+        <ul>
+            <li><a href="https://github.com/Heavyalter/Game-dev-2024">Works Stuffs Folder</a></li>
+            <li><a href="T1A01-BASIC.HTML">T1A01 Basic-M.M</a></li>
+            <li><a href="t1a02-proper-MM.html">T1A02 Proper-M.M</a></li>
+            <li><a href="t1a03-table-1'st-M,M.HTML">Table</a></li>
+            <li><a href="t1a04-forms-M,M.html">T1A04 Forms-M.M</a></li>
+        </ul>
+
+        <h2>X Stuff</h2>
+        <ul>
+            <li><a href="doug.html">Dougdoug X Assignment</a></li>
+        </ul>
+
+        <h2>Simple Form</h2>
+        <form action="/submit-form" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+
+            <p>Gender:</p>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label><br>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label><br>
+
+            <p>Hobbies:</p>
+            <input type="checkbox" id="hobby1" name="hobby" value="reading">
+            <label for="hobby1">Reading</label><br>
+            <input type="checkbox" id="hobby2" name="hobby" value="traveling">
+            <label for="hobby2">Traveling</label><br>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country">
+                <option value="canada">Canada</option>
+                <option value="usa">USA</option>
+                <option value="mexico">Mexico</option>
+            </select>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" cols="50"></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
 
