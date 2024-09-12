@@ -70,12 +70,44 @@
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email">
-       Favorite Sonic team:<br>
-<input type="radio" name="sonic" value="Team Sonic"> Team Sonic<br>
-<input type="radio" name="sonic" value="Team Dark"> Team Dark<br>
-<input type="radio" name="sonic" value="Team Rose"> Team Rose<br>
-<input type="radio" name="sonic" value="Team Chaotix"> Team Chaotix<br>
-<input type="radio" name="sonic" value="Eggman Empire"> Eggman Empire<br>
+       <style>
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* Adjust the gap to make it more compact */
+  }
+  .radio-item {
+    display: flex;
+    align-items: center;
+  }
+  .radio-item label {
+    margin-left: 4px; /* Adjust the margin to make it more compact */
+  }
+</style>
+
+<div class="radio-group">
+  <div class="radio-item">
+    <input type="radio" name="sonic" value="Team Sonic">
+    <label>Team Sonic</label>
+  </div>
+  <div class="radio-item">
+    <input type="radio" name="sonic" value="Team Dark">
+    <label>Team Dark</label>
+  </div>
+  <div class="radio-item">
+    <input type="radio" name="sonic" value="Team Rose">
+    <label>Team Rose</label>
+  </div>
+  <div class="radio-item">
+    <input type="radio" name="sonic" value="Team Chaotix">
+    <label>Team Chaotix</label>
+  </div>
+  <div class="radio-item">
+    <input type="radio" name="sonic" value="Eggman Empire">
+    <label>Eggman Empire</label>
+  </div>
+</div>
+
 
 
             
