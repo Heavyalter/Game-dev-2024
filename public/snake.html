@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Snake Game with Boss Fight</title>
+    <title>Snake Game with Queen Snake</title>
     <style>
         body {
             display: flex;
@@ -37,7 +37,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const box = 20;
-        let snake, food, boss, score, d, game, powerUp, hasPowerUp;
+        let snake, food, queenSnake, score, d, game, powerUp, hasPowerUp;
 
         function init() {
             snake = [{ x: 9 * box, y: 10 * box }];
@@ -45,7 +45,7 @@
                 x: Math.floor(Math.random() * 19 + 1) * box,
                 y: Math.floor(Math.random() * 19 + 1) * box
             };
-            boss = {
+            queenSnake = {
                 x: Math.floor(Math.random() * 19 + 1) * box,
                 y: Math.floor(Math.random() * 19 + 1) * box,
                 active: false,
@@ -101,12 +101,12 @@
             ctx.fillStyle = 'red';
             ctx.fillRect(food.x, food.y, box, box);
 
-            if (boss.active) {
+            if (queenSnake.active) {
                 ctx.fillStyle = 'blue';
-                for (let i = 0; i < boss.body.length; i++) {
-                    ctx.fillRect(boss.body[i].x, boss.body[i].y, box, box);
+                for (let i = 0; i < queenSnake.body.length; i++) {
+                    ctx.fillRect(queenSnake.body[i].x, queenSnake.body[i].y, box, box);
                 }
-                moveBoss();
+                moveQueenSnake();
             }
 
             if (powerUp.active) {
@@ -129,7 +129,7 @@
                     y: Math.floor(Math.random() * 19 + 1) * box
                 };
                 if (score >= 5) {
-                    boss.active = true;
+                    queenSnake.active = true;
                 }
                 if (score % 10 === 0) {
                     powerUp.active = true;
@@ -150,13 +150,13 @@
                 y: snakeY
             };
 
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (boss.active && collision(newHead, boss.body) && !hasPowerUp)) {
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (queenSnake.active && collision(newHead, queenSnake.body) && !hasPowerUp)) {
                 clearInterval(game);
             }
 
-            if (boss.active && collision(newHead, boss.body) && hasPowerUp) {
-                boss.active = false;
-                boss.body = [];
+            if (queenSnake.active && collision(newHead, queenSnake.body) && hasPowerUp) {
+                queenSnake.active = false;
+                queenSnake.body = [];
                 hasPowerUp = false;
             }
 
@@ -167,30 +167,28 @@
             ctx.fillText(score, 2 * box, 1.6 * box);
         }
 
-        function moveBoss() {
-            let bossX = boss.body.length > 0 ? boss.body[0].x : boss.x;
-            let bossY = boss.body.length > 0 ? boss.body[0].y : boss.y;
+        function moveQueenSnake() {
+            let queenX = queenSnake.body.length > 0 ? queenSnake.body[0].x : queenSnake.x;
+            let queenY = queenSnake.body.length > 0 ? queenSnake.body[0].y : queenSnake.y;
 
-            if (Math.random() < 0.5) {
-                if (bossX < food.x) bossX += box / boss.speed;
-                else if (bossX > food.x) bossX -= box / boss.speed;
-            } else {
-                if (bossY < food.y) bossY += box / boss.speed;
-                else if (bossY > food.y) bossY -= box / boss.speed;
-            }
+            if (queenX < food.x) queenX += box;
+            else if (queenX > food.x) queenX -= box;
 
-            let newBossHead = { x: bossX, y: bossY };
+            if (queenY < food.y) queenY += box;
+            else if (queenY > food.y) queenY -= box;
 
-            if (bossX == food.x && bossY == food.y) {
+            let newQueenHead = { x: queenX, y: queenY };
+
+            if (queenX == food.x && queenY == food.y) {
                 food = {
                     x: Math.floor(Math.random() * 19 + 1) * box,
                     y: Math.floor(Math.random() * 19 + 1) * box
                 };
             } else {
-                boss.body.pop();
+                queenSnake.body.pop();
             }
 
-            boss.body.unshift(newBossHead);
+            queenSnake.body.unshift(newQueenHead);
         }
 
         function resetGame() {
