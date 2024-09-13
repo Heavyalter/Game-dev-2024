@@ -5,36 +5,63 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #121212;
+            color: #ffffff;
             margin: 0;
         }
         canvas {
-            border: 1px solid #000;
+            border: 1px solid #ffffff;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
         }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <button onclick="resetGame()">Reset Game</button>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const box = 20;
-        let snake = [];
-        snake[0] = { x: 9 * box, y: 10 * box };
-        let food = {
-            x: Math.floor(Math.random() * 19 + 1) * box,
-            y: Math.floor(Math.random() * 19 + 1) * box
-        };
-        let boss = {
-            x: Math.floor(Math.random() * 19 + 1) * box,
-            y: Math.floor(Math.random() * 19 + 1) * box,
-            active: false
-        };
-        let score = 0;
-        let d;
+        let snake, food, boss, score, d, game, powerUp, hasPowerUp;
+
+        function init() {
+            snake = [{ x: 9 * box, y: 10 * box }];
+            food = {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box
+            };
+            boss = {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box,
+                active: false,
+                body: []
+            };
+            powerUp = {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box,
+                active: false
+            };
+            score = 0;
+            d = null;
+            hasPowerUp = false;
+            if (game) clearInterval(game);
+            game = setInterval(draw, 100);
+        }
 
         document.addEventListener('keydown', direction);
 
@@ -60,7 +87,7 @@
         }
 
         function draw() {
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = '#121212';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             for (let i = 0; i < snake.length; i++) {
@@ -75,8 +102,15 @@
 
             if (boss.active) {
                 ctx.fillStyle = 'blue';
-                ctx.fillRect(boss.x, boss.y, box, box);
+                for (let i = 0; i < boss.body.length; i++) {
+                    ctx.fillRect(boss.body[i].x, boss.body[i].y, box, box);
+                }
                 moveBoss();
+            }
+
+            if (powerUp.active) {
+                ctx.fillStyle = 'yellow';
+                ctx.fillRect(powerUp.x, powerUp.y, box, box);
             }
 
             let snakeX = snake[0].x;
@@ -96,8 +130,18 @@
                 if (score >= 5) {
                     boss.active = true;
                 }
+                if (score % 10 === 0) {
+                    powerUp.active = true;
+                    powerUp.x = Math.floor(Math.random() * 19 + 1) * box;
+                    powerUp.y = Math.floor(Math.random() * 19 + 1) * box;
+                }
             } else {
                 snake.pop();
+            }
+
+            if (snakeX == powerUp.x && snakeY == powerUp.y) {
+                hasPowerUp = true;
+                powerUp.active = false;
             }
 
             let newHead = {
@@ -105,26 +149,52 @@
                 y: snakeY
             };
 
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (boss.active && collision(newHead, [boss]))) {
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (boss.active && collision(newHead, boss.body) && !hasPowerUp)) {
                 clearInterval(game);
+            }
+
+            if (boss.active && collision(newHead, boss.body) && hasPowerUp) {
+                boss.active = false;
+                boss.body = [];
+                hasPowerUp = false;
             }
 
             snake.unshift(newHead);
 
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'white';
             ctx.font = '45px Changa one';
             ctx.fillText(score, 2 * box, 1.6 * box);
         }
 
         function moveBoss() {
-            let direction = Math.floor(Math.random() * 4);
-            if (direction == 0 && boss.x > 0) boss.x -= box;
-            if (direction == 1 && boss.y > 0) boss.y -= box;
-            if (direction == 2 && boss.x < canvas.width - box) boss.x += box;
-            if (direction == 3 && boss.y < canvas.height - box) boss.y += box;
+            let bossX = boss.body.length > 0 ? boss.body[0].x : boss.x;
+            let bossY = boss.body.length > 0 ? boss.body[0].y : boss.y;
+
+            if (bossX < food.x) bossX += box;
+            else if (bossX > food.x) bossX -= box;
+
+            if (bossY < food.y) bossY += box;
+            else if (bossY > food.y) bossY -= box;
+
+            let newBossHead = { x: bossX, y: bossY };
+
+            if (bossX == food.x && bossY == food.y) {
+                food = {
+                    x: Math.floor(Math.random() * 19 + 1) * box,
+                    y: Math.floor(Math.random() * 19 + 1) * box
+                };
+            } else {
+                boss.body.pop();
+            }
+
+            boss.body.unshift(newBossHead);
         }
 
-        let game = setInterval(draw, 100);
+        function resetGame() {
+            init();
+        }
+
+        init();
     </script>
 </body>
 </html>
