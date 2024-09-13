@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Snake Game with Queen Snake and Shop</title>
+    <title>Snake Game with Queen Snake and Enemies</title>
     <style>
         body {
             display: flex;
@@ -44,12 +44,14 @@
     <div class="shop">
         <button onclick="buyPowerUp('speed')">Buy Speed Boost (10 points)</button>
         <button onclick="buyPowerUp('shield')">Buy Shield (15 points)</button>
+        <button onclick="buyPowerUp('extraLife')">Buy Extra Life (20 points)</button>
+        <button onclick="buyPowerUp('slowEnemies')">Slow Down Enemies (15 points)</button>
     </div>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const box = 20;
-        let snake, food, queenSnake, score, d, game, powerUp, hasPowerUp, shieldActive, speedBoost;
+        let snake, food, queenSnake, enemies, score, d, game, powerUp, hasPowerUp, shieldActive, speedBoost, extraLife, slowEnemies;
 
         function init() {
             snake = [{ x: 9 * box, y: 10 * box }];
@@ -64,6 +66,13 @@
                 body: [],
                 speed: 2
             };
+            enemies = [];
+            for (let i = 0; i < 3; i++) {
+                enemies.push({
+                    x: Math.floor(Math.random() * 39 + 1) * box,
+                    y: Math.floor(Math.random() * 29 + 1) * box
+                });
+            }
             powerUp = {
                 x: Math.floor(Math.random() * 39 + 1) * box,
                 y: Math.floor(Math.random() * 29 + 1) * box,
@@ -74,6 +83,8 @@
             hasPowerUp = false;
             shieldActive = false;
             speedBoost = false;
+            extraLife = false;
+            slowEnemies = false;
             if (game) clearInterval(game);
             game = setInterval(draw, 100);
         }
@@ -123,6 +134,12 @@
                 moveQueenSnake();
             }
 
+            for (let i = 0; i < enemies.length; i++) {
+                ctx.fillStyle = 'purple';
+                ctx.fillRect(enemies[i].x, enemies[i].y, box, box);
+                moveEnemy(enemies[i]);
+            }
+
             if (powerUp.active) {
                 ctx.fillStyle = 'yellow';
                 ctx.fillRect(powerUp.x, powerUp.y, box, box);
@@ -142,7 +159,7 @@
                     x: Math.floor(Math.random() * 39 + 1) * box,
                     y: Math.floor(Math.random() * 29 + 1) * box
                 };
-                if (score >= 5) {
+                if (score >= 10 && Math.random() < 0.1) {
                     queenSnake.active = true;
                 }
                 if (score % 10 === 0) {
@@ -164,8 +181,13 @@
                 y: snakeY
             };
 
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (queenSnake.active && collision(newHead, queenSnake.body) && !hasPowerUp && !shieldActive)) {
-                clearInterval(game);
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (queenSnake.active && collision(newHead, queenSnake.body) && !hasPowerUp && !shieldActive) || collision(newHead, enemies)) {
+                if (extraLife) {
+                    extraLife = false;
+                    snake.pop();
+                } else {
+                    clearInterval(game);
+                }
             }
 
             if (queenSnake.active && collision(newHead, queenSnake.body) && (hasPowerUp || shieldActive)) {
@@ -206,23 +228,17 @@
             queenSnake.body.unshift(newQueenHead);
         }
 
+        function moveEnemy(enemy) {
+            let direction = Math.floor(Math.random() * 4);
+            if (direction == 0 && enemy.x > 0) enemy.x -= box;
+            if (direction == 1 && enemy.y > 0) enemy.y -= box;
+            if (direction == 2 && enemy.x < canvas.width - box) enemy.x += box;
+            if (direction == 3 && enemy.y < canvas.height - box) enemy.y += box;
+        }
+
         function buyPowerUp(type) {
             if (type === 'speed' && score >= 10) {
                 score -= 10;
                 speedBoost = true;
                 setTimeout(() => speedBoost = false, 5000);
-            } else if (type === 'shield' && score >= 15) {
-                score -= 15;
-                shieldActive = true;
-                setTimeout(() => shieldActive = false, 5000);
-            }
-        }
-
-        function resetGame() {
-            init();
-        }
-
-        init();
-    </script>
-</body>
-</html>
+            } else if (type
