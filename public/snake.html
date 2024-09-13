@@ -49,7 +49,8 @@
                 x: Math.floor(Math.random() * 19 + 1) * box,
                 y: Math.floor(Math.random() * 19 + 1) * box,
                 active: false,
-                body: []
+                body: [],
+                speed: 2
             };
             powerUp = {
                 x: Math.floor(Math.random() * 19 + 1) * box,
@@ -170,11 +171,13 @@
             let bossX = boss.body.length > 0 ? boss.body[0].x : boss.x;
             let bossY = boss.body.length > 0 ? boss.body[0].y : boss.y;
 
-            if (bossX < food.x) bossX += box;
-            else if (bossX > food.x) bossX -= box;
-
-            if (bossY < food.y) bossY += box;
-            else if (bossY > food.y) bossY -= box;
+            if (Math.random() < 0.5) {
+                if (bossX < food.x) bossX += box / boss.speed;
+                else if (bossX > food.x) bossX -= box / boss.speed;
+            } else {
+                if (bossY < food.y) bossY += box / boss.speed;
+                else if (bossY > food.y) bossY -= box / boss.speed;
+            }
 
             let newBossHead = { x: bossX, y: bossY };
 
