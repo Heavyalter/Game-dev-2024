@@ -1,1 +1,11 @@
 <h1 align=center>in out stuffs</h1>
+
+input:<input type=text id="thefirstname" value="Sonic">
+<input type=button value="show on page" onclick="{
+  // comment
+document.getElementByid('div1').innerHTML = 'your name isnt ' +
+  document.getElementById('thefirstname').value
+
+}">
+
+<div id="div1">...</div>
