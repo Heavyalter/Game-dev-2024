@@ -40,15 +40,13 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        input[type="text"] {
+        input[type="text"], input[type="button"] {
             padding: 10px;
             border-radius: 4px;
             border: 1px solid #03dac6;
             margin-right: 10px;
         }
         input[type="button"] {
-            padding: 10px 20px;
-            border-radius: 4px;
             border: none;
             background-color: #03dac6;
             color: #121212;
@@ -68,10 +66,22 @@
         <input type="button" value="Show on Page" onclick="{
             document.getElementById('div1').innerHTML = 'Your name isn\'t ' + document.getElementById('thefirstname').value;
         }">
-        <input type="button" value="Ask Sonic Question" onclick="{
+        <input type="button" value="Ask Sonic Question 1" onclick="{
             document.getElementById('div1').innerHTML = 'What is Sonic\'s favorite food?';
         }">
+        <input type="button" value="Ask Sonic Question 2" onclick="{
+            document.getElementById('div1').innerHTML = 'Who is Sonic\'s best friend?';
+        }">
+        <input type="button" value="Ask Sonic Question 3" onclick="{
+            document.getElementById('div1').innerHTML = 'What is the name of Sonic\'s arch-enemy?';
+        }">
         <div id="div1">Your name isn't</div>
+        <label for="answer">Answer:</label>
+        <input type="text" id="answer">
+        <input type="button" value="Submit Answer" onclick="{
+            let answer = document.getElementById('answer').value;
+            document.getElementById('div1').innerHTML += '<br>Your answer: ' + answer;
+        }">
     </div>
 </body>
 </html>
