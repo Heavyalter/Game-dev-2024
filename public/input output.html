@@ -7,7 +7,7 @@
     <style>
         body {
             background-color: #121212;
-            color: #ffffff;
+            color: #87CEEB; /* Changed to a nice blue color */
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -40,21 +40,35 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #03dac6;
+            margin-right: 10px;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            background-color: #03dac6;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="button"]:hover {
+            background-color: #bb86fc;
+        }
     </style>
 </head>
 <body>
-
-
-<h1 align=center>in out stuffs</h1>
-
-input:<input type=text id="thefirstname" value="Sonic">
-<input type=button value="show on page" onclick="{
-  // comment
-document.getElementByid('div1').innerHTML = 'your name isnt ' +
-  document.getElementById('thefirstname').value
-
-}">
-
-<div id="div1">your name isn't</div>
+    <div class="container">
+        <h1 align="center">In Out Stuffs</h1>
+        <label for="thefirstname">Input:</label>
+        <input type="text" id="thefirstname" value="Sonic">
+        <input type="button" value="Show on Page" onclick="{
+            document.getElementById('div1').innerHTML = 'Your name isn\'t ' + document.getElementById('thefirstname').value;
+        }">
+        <div id="div1">Your name isn't</div>
+    </div>
 </body>
-</html> 
+</html>
