@@ -1,4 +1,10 @@
- <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions Example</title>
+    <style>
         body {
             background-color: #121212;
             color: #87CEEB; /* Changed to a nice blue color */
@@ -41,6 +47,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             margin-right: 10px;
+            margin-bottom: 10px; /* Added margin-bottom for spacing */
         }
         input[type="button"]:hover {
             background-color: #bb86fc;
@@ -54,28 +61,30 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     </style>
+</head>
 <body>
-<h1 align="center">FUNCTIONS</h1> 
+    <h1 align="center">FUNCTIONS</h1> 
 
-<script>
-function myVar(myIn){
-  return document.getElementById(myIn);
-}
+    <script>
+    function myVar(myIn){
+      return document.getElementById(myIn);
+    }
 
- function ChangeBackgroundColor(color) {
-  documents.body.style.BackgroundColor = Color;
- }
- 
-</script>
+    function changeBackgroundColor(color) {
+      document.body.style.backgroundColor = color;
+    }
+    </script>
 
-Input: <input type="text" id="myfirstname" value="sonic">
-<input type="button" value="Show on Page" onclick="{
-  myVar('div1').innerHTML = 'Your name isn\'t ' + document.getElementById('myfirstname').value;
-}">
+    Input: <input type="text" id="myfirstname" value="sonic">
+    <input type="button" value="Show on Page" onclick="{
+      myVar('div1').innerHTML = 'Your name isn\'t ' + document.getElementById('myfirstname').value;
+    }">
 
-<div id="div1">Your name isn't</div>
+    <div id="div1">Your name isn't</div>
 
- <input type="button" value="Change to Blue" onclick="changeBackgroundColor('blue')">
-<input type="button" value="Change to Green" onclick="changeBackgroundColor('green')">
-<input type="button" value="Change to Yellow" onclick="changeBackgroundColor('yellow')">
-<input type="button" value="Reset Color" onclick="changeBackgroundColor('white')">
+    <input type="button" value="Change to Blue" onclick="changeBackgroundColor('blue')">
+    <input type="button" value="Change to Green" onclick="changeBackgroundColor('green')">
+    <input type="button" value="Change to Yellow" onclick="changeBackgroundColor('yellow')">
+    <input type="button" value="Reset Color" onclick="changeBackgroundColor('white')">
+</body>
+</html>
