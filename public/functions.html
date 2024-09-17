@@ -61,6 +61,11 @@
 function myVar(myIn){
   return document.getElementById(myIn);
 }
+
+ function ChangeBackgroundColor(color) {
+  documents.body.style.BackgroundColor = Color;
+ }
+ 
 </script>
 
 Input: <input type="text" id="myfirstname" value="sonic">
@@ -69,3 +74,8 @@ Input: <input type="text" id="myfirstname" value="sonic">
 }">
 
 <div id="div1">Your name isn't</div>
+
+ <input type="button" value="Change to Blue" onclick="changeBackgroundColor('blue')">
+<input type="button" value="Change to Green" onclick="changeBackgroundColor('green')">
+<input type="button" value="Change to Yellow" onclick="changeBackgroundColor('yellow')">
+<input type="button" value="Reset Color" onclick="changeBackgroundColor('white')">
