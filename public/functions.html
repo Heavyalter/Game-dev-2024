@@ -1,8 +1,13 @@
-</script>
-function my var(myIn){
+<script>
+function myVar(myIn){
   return document.getElementById(myIn)
 
+}
+  
+</script>
 
+  Input:<input type=text id="myfirstname" value="sonic">
   <input type="button" value="Show on Page" onclick="{
-            document.getElementById('div1').innerHTML = 'Your name isn\'t ' + document.getElementById('thefirstname').value;
+      
+    myVar('div1').innerHTML = 'Your name isn\'t ' + document.getElementById('thefirstname').value;
         }">
