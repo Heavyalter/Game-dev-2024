@@ -28,18 +28,18 @@
 </head>
 <body>
     <h1>Snake Game with Weapon and Targets</h1>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <canvas id="gameCanvas" width="1000" height="1000"></canvas>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
         const box = 20;
         let snake = [];
-        snake[0] = { x: 15 * box, y: 15 * box };
+        snake[0] = { x: 25 * box, y: 25 * box };
 
         let food = {
-            x: Math.floor(Math.random() * 29 + 1) * box,
-            y: Math.floor(Math.random() * 29 + 1) * box
+            x: Math.floor(Math.random() * 49 + 1) * box,
+            y: Math.floor(Math.random() * 49 + 1) * box
         };
 
         let projectiles = [];
@@ -132,8 +132,8 @@
             if (snakeX == food.x && snakeY == food.y) {
                 score++;
                 food = {
-                    x: Math.floor(Math.random() * 29 + 1) * box,
-                    y: Math.floor(Math.random() * 29 + 1) * box
+                    x: Math.floor(Math.random() * 49 + 1) * box,
+                    y: Math.floor(Math.random() * 49 + 1) * box
                 };
             } else {
                 snake.pop();
@@ -156,8 +156,8 @@
 
             if (Math.random() < 0.02) {
                 targets.push({
-                    x: Math.floor(Math.random() * 29 + 1) * box,
-                    y: Math.floor(Math.random() * 29 + 1) * box
+                    x: Math.floor(Math.random() * 49 + 1) * box,
+                    y: Math.floor(Math.random() * 49 + 1) * box
                 });
             }
         }
