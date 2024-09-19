@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game with Weapon</title>
+    <title>Snake Game with Weapon and Targets</title>
     <style>
         body {
             display: flex;
@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-    <h1>Snake Game with Weapon</h1>
+    <h1>Snake Game with Weapon and Targets</h1>
     <canvas id="gameCanvas" width="600" height="600"></canvas>
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -43,6 +43,7 @@
         };
 
         let projectiles = [];
+        let targets = [];
         let score = 0;
         let d;
 
@@ -105,6 +106,21 @@
                 }
             }
 
+            for (let i = 0; i < targets.length; i++) {
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(targets[i].x, targets[i].y, box, box);
+
+                for (let j = 0; j < projectiles.length; j++) {
+                    if (projectiles[j].x == targets[i].x && projectiles[j].y == targets[i].y) {
+                        score += 5;
+                        targets.splice(i, 1);
+                        projectiles.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+
             let snakeX = snake[0].x;
             let snakeY = snake[0].y;
 
@@ -137,6 +153,13 @@
             ctx.fillStyle = 'white';
             ctx.font = '45px Changa one';
             ctx.fillText(score, 2 * box, 1.6 * box);
+
+            if (Math.random() < 0.02) {
+                targets.push({
+                    x: Math.floor(Math.random() * 29 + 1) * box,
+                    y: Math.floor(Math.random() * 29 + 1) * box
+                });
+            }
         }
 
         let game = setInterval(draw, 100);
