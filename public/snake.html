@@ -1,93 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Snake Game with Queen Snake and Enemies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             background-color: #121212;
             color: #ffffff;
-            margin: 0;
+            font-family: Arial, sans-serif;
         }
+
+        h1 {
+            text-align: center;
+        }
+
         canvas {
             border: 1px solid #ffffff;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #555;
-        }
-        .shop {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .shop button {
-            margin: 0 10px;
+            background-color: #333333;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-    <button onclick="resetGame()">Reset Game</button>
-    <div class="shop">
-        <button onclick="buyPowerUp('speed')">Buy Speed Boost (10 points)</button>
-        <button onclick="buyPowerUp('shield')">Buy Shield (15 points)</button>
-        <button onclick="buyPowerUp('extraLife')">Buy Extra Life (20 points)</button>
-        <button onclick="buyPowerUp('slowEnemies')">Slow Down Enemies (15 points)</button>
-    </div>
+    <h1>Snake Game</h1>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        const box = 20;
-        let snake, food, queenSnake, enemies, score, d, game, powerUp, hasPowerUp, shieldActive, speedBoost, extraLife, slowEnemies;
 
-        function init() {
-            snake = [{ x: 9 * box, y: 10 * box }];
-            food = {
-                x: Math.floor(Math.random() * 39 + 1) * box,
-                y: Math.floor(Math.random() * 29 + 1) * box
-            };
-            queenSnake = {
-                x: Math.floor(Math.random() * 39 + 1) * box,
-                y: Math.floor(Math.random() * 29 + 1) * box,
-                active: false,
-                body: [],
-                speed: 2
-            };
-            enemies = [];
-            for (let i = 0; i < 3; i++) {
-                enemies.push({
-                    x: Math.floor(Math.random() * 39 + 1) * box,
-                    y: Math.floor(Math.random() * 29 + 1) * box
-                });
-            }
-            powerUp = {
-                x: Math.floor(Math.random() * 39 + 1) * box,
-                y: Math.floor(Math.random() * 29 + 1) * box,
-                active: false
-            };
-            score = 0;
-            d = null;
-            hasPowerUp = false;
-            shieldActive = false;
-            speedBoost = false;
-            extraLife = false;
-            slowEnemies = false;
-            if (game) clearInterval(game);
-            game = setInterval(draw, 100);
-        }
+        const box = 20;
+        let snake = [];
+        snake[0] = { x: 9 * box, y: 10 * box };
+
+        let food = {
+            x: Math.floor(Math.random() * 19 + 1) * box,
+            y: Math.floor(Math.random() * 19 + 1) * box
+        };
+
+        let score = 0;
+        let d;
 
         document.addEventListener('keydown', direction);
 
@@ -103,9 +59,9 @@
             }
         }
 
-        function collision(head, array) {
-            for (let i = 0; i < array.length; i++) {
-                if (head.x == array[i].x && head.y == array[i].y) {
+        function collision(newHead, snake) {
+            for (let i = 0; i < snake.length; i++) {
+                if (newHead.x == snake[i].x && newHead.y == snake[i].y) {
                     return true;
                 }
             }
@@ -126,25 +82,6 @@
             ctx.fillStyle = 'red';
             ctx.fillRect(food.x, food.y, box, box);
 
-            if (queenSnake.active) {
-                ctx.fillStyle = 'blue';
-                for (let i = 0; i < queenSnake.body.length; i++) {
-                    ctx.fillRect(queenSnake.body[i].x, queenSnake.body[i].y, box, box);
-                }
-                moveQueenSnake();
-            }
-
-            for (let i = 0; i < enemies.length; i++) {
-                ctx.fillStyle = 'purple';
-                ctx.fillRect(enemies[i].x, enemies[i].y, box, box);
-                moveEnemy(enemies[i]);
-            }
-
-            if (powerUp.active) {
-                ctx.fillStyle = 'yellow';
-                ctx.fillRect(powerUp.x, powerUp.y, box, box);
-            }
-
             let snakeX = snake[0].x;
             let snakeY = snake[0].y;
 
@@ -156,24 +93,11 @@
             if (snakeX == food.x && snakeY == food.y) {
                 score++;
                 food = {
-                    x: Math.floor(Math.random() * 39 + 1) * box,
-                    y: Math.floor(Math.random() * 29 + 1) * box
+                    x: Math.floor(Math.random() * 19 + 1) * box,
+                    y: Math.floor(Math.random() * 19 + 1) * box
                 };
-                if (score >= 10 && Math.random() < 0.1) {
-                    queenSnake.active = true;
-                }
-                if (score % 10 === 0) {
-                    powerUp.active = true;
-                    powerUp.x = Math.floor(Math.random() * 39 + 1) * box;
-                    powerUp.y = Math.floor(Math.random() * 29 + 1) * box;
-                }
             } else {
                 snake.pop();
-            }
-
-            if (snakeX == powerUp.x && snakeY == powerUp.y) {
-                hasPowerUp = true;
-                powerUp.active = false;
             }
 
             let newHead = {
@@ -181,20 +105,8 @@
                 y: snakeY
             };
 
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake) || (queenSnake.active && collision(newHead, queenSnake.body) && !hasPowerUp && !shieldActive) || collision(newHead, enemies)) {
-                if (extraLife) {
-                    extraLife = false;
-                    snake.pop();
-                } else {
-                    clearInterval(game);
-                }
-            }
-
-            if (queenSnake.active && collision(newHead, queenSnake.body) && (hasPowerUp || shieldActive)) {
-                queenSnake.active = false;
-                queenSnake.body = [];
-                hasPowerUp = false;
-                shieldActive = false;
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
             }
 
             snake.unshift(newHead);
@@ -204,40 +116,7 @@
             ctx.fillText(score, 2 * box, 1.6 * box);
         }
 
-        function moveQueenSnake() {
-            let queenX = queenSnake.body.length > 0 ? queenSnake.body[0].x : queenSnake.x;
-            let queenY = queenSnake.body.length > 0 ? queenSnake.body[0].y : queenSnake.y;
-
-            if (queenX < food.x) queenX += box;
-            else if (queenX > food.x) queenX -= box;
-
-            if (queenY < food.y) queenY += box;
-            else if (queenY > food.y) queenY -= box;
-
-            let newQueenHead = { x: queenX, y: queenY };
-
-            if (queenX == food.x && queenY == food.y) {
-                food = {
-                    x: Math.floor(Math.random() * 39 + 1) * box,
-                    y: Math.floor(Math.random() * 29 + 1) * box
-                };
-            } else {
-                queenSnake.body.pop();
-            }
-
-            queenSnake.body.unshift(newQueenHead);
-        }
-
-        function moveEnemy(enemy) {
-            let direction = Math.floor(Math.random() * 4);
-            if (direction == 0 && enemy.x > 0) enemy.x -= box;
-            if (direction == 1 && enemy.y > 0) enemy.y -= box;
-            if (direction == 2 && enemy.x < canvas.width - box) enemy.x += box;
-            if (direction == 3 && enemy.y < canvas.height - box) enemy.y += box;
-        }
-
-        function buyPowerUp(type) {
-            if (type === 'speed' && score >= 10) {
-                score -= 10;
-                speedBoost = true;
-                setTimeout(() => speedBoost = false,
+        let game = setInterval(draw, 100);
+    </script>
+</body>
+</html>
