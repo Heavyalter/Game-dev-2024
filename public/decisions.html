@@ -107,7 +107,7 @@
             } else if (action === 'date') {
                 let date = new Date().toLocaleDateString();
                 if (input.toLowerCase() === 'fred') {
-                    message = 'Fred, today\'s date is ' + date;
+                    message = 'Fred, today\'s date is ' + date + '. Have a great day!';
                 } else if (input === '') {
                     message = 'Today\'s date is ' + date;
                 } else {
@@ -116,14 +116,18 @@
             } else if (action === 'time') {
                 let time = new Date().toLocaleTimeString();
                 if (input.toLowerCase() === 'fred') {
-                    message = 'Fred, the current time is ' + time;
+                    message = 'Fred, the current time is ' + time + '. Don\'t be late!';
                 } else if (input === '') {
                     message = 'The current time is ' + time;
                 } else {
                     message = input + ', the current time is ' + time;
                 }
             } else if (action === 'clear') {
-                message = '';
+                if (input.toLowerCase() === 'fred') {
+                    message = 'Clearing the message for you, Fred!';
+                } else {
+                    message = '';
+                }
             } else {
                 message = 'Unknown action!';
             }
