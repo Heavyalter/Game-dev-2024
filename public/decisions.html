@@ -83,19 +83,45 @@
             if (action === 'greet') {
                 if (input.toLowerCase() === 'fred') {
                     message = 'Hello, Fred!';
+                } else if (input === '') {
+                    message = 'Please enter your name.';
                 } else {
-                    message = 'Where is Fred?';
+                    message = 'Hello, ' + input + '!';
                 }
             } else if (action === 'goodbye') {
-                message = 'Goodbye!';
+                if (input.toLowerCase() === 'fred') {
+                    message = 'Goodbye, Fred!';
+                } else if (input === '') {
+                    message = 'Goodbye!';
+                } else {
+                    message = 'Goodbye, ' + input + '!';
+                }
             } else if (action === 'question') {
-                message = 'How can I help you today?';
+                if (input.toLowerCase() === 'fred') {
+                    message = 'Fred, how can I help you today?';
+                } else if (input === '') {
+                    message = 'How can I help you today?';
+                } else {
+                    message = input + ', how can I help you today?';
+                }
             } else if (action === 'date') {
                 let date = new Date().toLocaleDateString();
-                message = 'Today\'s date is ' + date;
+                if (input.toLowerCase() === 'fred') {
+                    message = 'Fred, today\'s date is ' + date;
+                } else if (input === '') {
+                    message = 'Today\'s date is ' + date;
+                } else {
+                    message = input + ', today\'s date is ' + date;
+                }
             } else if (action === 'time') {
                 let time = new Date().toLocaleTimeString();
-                message = 'Current time is ' + time;
+                if (input.toLowerCase() === 'fred') {
+                    message = 'Fred, the current time is ' + time;
+                } else if (input === '') {
+                    message = 'The current time is ' + time;
+                } else {
+                    message = input + ', the current time is ' + time;
+                }
             } else if (action === 'clear') {
                 message = '';
             } else {
