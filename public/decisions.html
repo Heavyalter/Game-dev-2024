@@ -62,7 +62,27 @@
     </style>
 </head>
 <body>
- 
+    <div class="container">
+        <h1>Welcome to My Website</h1>
+        <label for="myText1">Enter your name:</label>
+        <input type="text" id="myText1" placeholder="Type your name here">
+        <input type="button" value="Submit" onclick="greetUser()">
+        <div id="div1"></div>
+    </div>
+
+    <script>
+        function greetUser() {
+            let input = document.getElementById('myText1').value;
+            let message;
+            if (input.toLowerCase() === 'fred') {
+                message = 'Hello, Fred!';
+            } else {
+                message = 'Where is Fred?';
+            }
+            document.getElementById('div1').innerText = message;
+        }
+    </script>
 </body>
 </html>
+
 
