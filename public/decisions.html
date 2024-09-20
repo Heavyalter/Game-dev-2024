@@ -66,47 +66,43 @@
         <h1>Welcome to My Website</h1>
         <label for="myText1">Enter your name:</label>
         <input type="text" id="myText1" placeholder="Type your name here">
-        <input type="button" value="Greet" onclick="greetUser()">
-        <input type="button" value="Say Goodbye" onclick="sayGoodbye()">
-        <input type="button" value="Ask Question" onclick="askQuestion()">
-        <input type="button" value="Show Date" onclick="showDate()">
-        <input type="button" value="Show Time" onclick="showTime()">
-        <input type="button" value="Clear" onclick="clearMessage()">
+        <input type="button" value="Greet" onclick="handleButtonClick('greet')">
+        <input type="button" value="Say Goodbye" onclick="handleButtonClick('goodbye')">
+        <input type="button" value="Ask Question" onclick="handleButtonClick('question')">
+        <input type="button" value="Show Date" onclick="handleButtonClick('date')">
+        <input type="button" value="Show Time" onclick="handleButtonClick('time')">
+        <input type="button" value="Clear" onclick="handleButtonClick('clear')">
         <div id="div1"></div>
     </div>
 
     <script>
-        function greetUser() {
+        function handleButtonClick(action) {
             let input = document.getElementById('myText1').value;
             let message;
-            if (input.toLowerCase() === 'fred') {
-                message = 'Hello, Fred!';
+
+            if (action === 'greet') {
+                if (input.toLowerCase() === 'fred') {
+                    message = 'Hello, Fred!';
+                } else {
+                    message = 'Where is Fred?';
+                }
+            } else if (action === 'goodbye') {
+                message = 'Goodbye!';
+            } else if (action === 'question') {
+                message = 'How can I help you today?';
+            } else if (action === 'date') {
+                let date = new Date().toLocaleDateString();
+                message = 'Today\'s date is ' + date;
+            } else if (action === 'time') {
+                let time = new Date().toLocaleTimeString();
+                message = 'Current time is ' + time;
+            } else if (action === 'clear') {
+                message = '';
             } else {
-                message = 'Where is Fred?';
+                message = 'Unknown action!';
             }
+
             document.getElementById('div1').innerText = message;
-        }
-
-        function sayGoodbye() {
-            document.getElementById('div1').innerText = 'Goodbye!';
-        }
-
-        function askQuestion() {
-            document.getElementById('div1').innerText = 'How can I help you today?';
-        }
-
-        function showDate() {
-            let date = new Date().toLocaleDateString();
-            document.getElementById('div1').innerText = 'Today\'s date is ' + date;
-        }
-
-        function showTime() {
-            let time = new Date().toLocaleTimeString();
-            document.getElementById('div1').innerText = 'Current time is ' + time;
-        }
-
-        function clearMessage() {
-            document.getElementById('div1').innerText = '';
         }
     </script>
 </body>
