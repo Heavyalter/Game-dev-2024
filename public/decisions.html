@@ -63,10 +63,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Where is Fred?</h1>
+        <h1>Welcome to My Website</h1>
         <label for="myText1">Enter your name:</label>
         <input type="text" id="myText1" placeholder="Type your name here">
-        <input type="button" value="Submit" onclick="greetUser()">
+        <input type="button" value="Greet" onclick="greetUser()">
+        <input type="button" value="Say Goodbye" onclick="sayGoodbye()">
+        <input type="button" value="Ask Question" onclick="askQuestion()">
         <div id="div1"></div>
     </div>
 
@@ -81,8 +83,14 @@
             }
             document.getElementById('div1').innerText = message;
         }
+
+        function sayGoodbye() {
+            document.getElementById('div1').innerText = 'Goodbye!';
+        }
+
+        function askQuestion() {
+            document.getElementById('div1').innerText = 'How can I help you today?';
+        }
     </script>
 </body>
 </html>
-
-
