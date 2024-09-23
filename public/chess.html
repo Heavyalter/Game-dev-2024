@@ -68,6 +68,7 @@
             square.addEventListener('dragstart', dragStart);
             square.addEventListener('dragover', dragOver);
             square.addEventListener('drop', drop);
+            square.addEventListener('dragend', dragEnd);
             chessboard.appendChild(square);
         }
 
@@ -87,9 +88,12 @@
             if (event.target.classList.contains('square') && event.target !== draggedPiece) {
                 event.target.textContent = draggedPiece.textContent;
                 draggedPiece.textContent = '';
-                draggedPiece.classList.remove('dragging');
-                draggedPiece = null;
             }
+        }
+
+        function dragEnd(event) {
+            event.target.classList.remove('dragging');
+            draggedPiece = null;
         }
     </script>
 </body>
