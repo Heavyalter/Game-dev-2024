@@ -60,6 +60,12 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Page</title>
 </head>
 <body>
     <div class="container">
@@ -72,6 +78,8 @@
         <input type="button" value="Show Date" onclick="handleButtonClick('date')">
         <input type="button" value="Show Time" onclick="handleButtonClick('time')">
         <input type="button" value="Clear" onclick="handleButtonClick('clear')">
+        <input type="button" value="Tell a Joke" onclick="handleButtonClick('joke')">
+        <input type="button" value="Motivate Me" onclick="handleButtonClick('motivate')">
         <div id="div1"></div>
     </div>
 
@@ -128,6 +136,10 @@
                 } else {
                     message = '';
                 }
+            } else if (action === 'joke') {
+                message = 'Why don’t scientists trust atoms? Because they make up everything!';
+            } else if (action === 'motivate') {
+                message = 'Believe you can and you’re halfway there.';
             } else {
                 message = 'Unknown action!';
             }
