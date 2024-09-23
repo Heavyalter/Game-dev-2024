@@ -28,6 +28,7 @@
             justify-content: center;
             align-items: center;
             font-size: 2em;
+            cursor: pointer;
         }
 
         .white {
@@ -36,6 +37,10 @@
 
         .black {
             background-color: #b58863;
+        }
+
+        .dragging {
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -59,9 +64,33 @@
             square.classList.add('square');
             square.classList.add((Math.floor(i / 8) + i) % 2 === 0 ? 'white' : 'black');
             square.textContent = pieces[i];
+            square.draggable = true;
+            square.addEventListener('dragstart', dragStart);
+            square.addEventListener('dragover', dragOver);
+            square.addEventListener('drop', drop);
             chessboard.appendChild(square);
+        }
+
+        let draggedPiece = null;
+
+        function dragStart(event) {
+            draggedPiece = event.target;
+            event.target.classList.add('dragging');
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            if (event.target.classList.contains('square') && event.target !== draggedPiece) {
+                event.target.textContent = draggedPiece.textContent;
+                draggedPiece.textContent = '';
+                draggedPiece.classList.remove('dragging');
+                draggedPiece = null;
+            }
         }
     </script>
 </body>
 </html>
-
