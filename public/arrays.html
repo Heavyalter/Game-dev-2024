@@ -1,1 +1,26 @@
 
+
+<script>
+// set a few global Variables
+  let myMax = 6
+  let myArray = new array(myMax)
+</script>
+
+Input:<input type=text id="myFirstname" value="Marice"><br>
+
+<input type=button value="set array" onclick="{
+  myarray[0] = 'Marice'
+  myarray[1] = 'gabriel'
+  myarray[2] = 'Lilith'
+
+  document.getelementbyid('mydiv01').innerhtml = 'you set the array'
+}">
+
+<input type=button value="show array" onclick="{
+    document.getelementbyid('mydiv01').innerhtml = ''
+     for (myloop=0;  myLoop < 3;   myLoop++){
+        myarray[myloop] + '<br>'
+     }
+     }"><br>
+
+<div id="mydiv01">...</div>
