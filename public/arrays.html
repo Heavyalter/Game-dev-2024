@@ -60,34 +60,40 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     </style>
-<!DOCTYPE html>
-<h1 align="center">Arrays-M.M</h1>
+</head>
+<body>
+    <h1 align="center">Arrays-M.M</h1>
 
-<script>
-// Set a few global variables
-let myMax = 6;
-let myArray = new Array(myMax);
+    <script>
+    // Set a few global variables
+    let myMax = 6;
+    let myArray = new Array(myMax);
 
-function setArray() {
-  myArray[0] = 'Marice';
-  myArray[1] = 'Gabriel';
-  myArray[2] = 'Lilith';
+    function setArray() {
+      myArray[0] = 'Marice';
+      myArray[1] = 'Gabriel';
+      myArray[2] = 'Lilith';
 
-  document.getElementById('mydiv01').innerHTML = 'You set the array';
-}
+      document.getElementById('mydiv01').innerHTML = 'You set the array';
+    }
 
-function showArray() {
-  let output = '';
-  for (let myLoop = 0; myLoop < 3; myLoop++) {
-    output += myArray[myLoop] + '<br>';
-  }
-  document.getElementById('mydiv01').innerHTML = output;
-}
-</script>
+    function showArray() {
+      let output = '';
+      for (let myLoop = 0; myLoop < 3; myLoop++) {
+        output += myArray[myLoop] + '<br>';
+      }
+      document.getElementById('mydiv01').innerHTML = output;
+    }
+    </script>
 
-Input: <input type="text" id="myFirstname" value="Marice"><br>
+    <div class="container">
+        <label for="myFirstname">Input:</label>
+        <input type="text" id="myFirstname" value="Marice"><br>
 
-<input type="button" value="Set Array" onclick="setArray()">
-<input type="button" value="Show Array" onclick="showArray()"><br>
+        <input type="button" value="Set Array" onclick="setArray()">
+        <input type="button" value="Show Array" onclick="showArray()"><br>
 
-<div id="mydiv01">...</div>
+        <div id="mydiv01">...</div>
+    </div>
+</body>
+</html>
