@@ -61,29 +61,33 @@
         }
     </style>
 <!DOCTYPE html>
-<h1 align=center>Arrays-M.M</h1>
+<h1 align="center">Arrays-M.M</h1>
 
 <script>
-// set a few global Variables
-  let myMax = 6
-  let myArray = new array(myMax)
+// Set a few global variables
+let myMax = 6;
+let myArray = new Array(myMax);
+
+function setArray() {
+  myArray[0] = 'Marice';
+  myArray[1] = 'Gabriel';
+  myArray[2] = 'Lilith';
+
+  document.getElementById('mydiv01').innerHTML = 'You set the array';
+}
+
+function showArray() {
+  let output = '';
+  for (let myLoop = 0; myLoop < 3; myLoop++) {
+    output += myArray[myLoop] + '<br>';
+  }
+  document.getElementById('mydiv01').innerHTML = output;
+}
 </script>
 
-Input:<input type=text id="myFirstname" value="Marice"><br>
+Input: <input type="text" id="myFirstname" value="Marice"><br>
 
-<input type=button value="set array" onclick="{
-  myarray[0] = 'Marice'
-  myarray[1] = 'gabriel'
-  myarray[2] = 'Lilith'
-
-  document.getelementbyid('mydiv01').innerhtml = 'you set the array'
-}">
-
-<input type=button value="show array" onclick="{
-    document.getelementbyid('mydiv01').innerhtml = ''
-     for (myloop=0;  myLoop < 3;   myLoop++){
-        myarray[myloop] + '<br>'
-     }
-     }"><br>
+<input type="button" value="Set Array" onclick="setArray()">
+<input type="button" value="Show Array" onclick="showArray()"><br>
 
 <div id="mydiv01">...</div>
