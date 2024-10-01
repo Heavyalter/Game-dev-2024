@@ -103,6 +103,28 @@ function clearArray() {
   myArray = new Array(myMax);
   document.getElementById('mydiv01').innerHTML = 'Array cleared';
 }
+
+function removeFromArray() {
+  let elementToRemove = document.getElementById('myFirstname').value;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i] === elementToRemove) {
+      myArray[i] = undefined;
+      document.getElementById('mydiv01').innerHTML = 'Removed ' + elementToRemove + ' from the array';
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = elementToRemove + ' not found in the array';
+}
+
+function showArrayLength() {
+  let length = 0;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i]) {
+      length++;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = 'Array length: ' + length;
+}
 </script>
 
 <div class="container">
@@ -112,10 +134,11 @@ function clearArray() {
     <input type="button" value="Set Array" onclick="setArray()">
     <input type="button" value="Show Array" onclick="showArray()">
     <input type="button" value="Add to Array" onclick="addToArray()">
-    <input type="button" value="Clear Array" onclick="clearArray()"><br>
+    <input type="button" value="Clear Array" onclick="clearArray()">
+    <input type="button" value="Remove from Array" onclick="removeFromArray()">
+    <input type="button" value="Show Array Length" onclick="showArrayLength()"><br>
 
     <div id="mydiv01">...</div>
 </div>
-
 </body>
 </html>
