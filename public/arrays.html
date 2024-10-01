@@ -79,8 +79,10 @@ function setArray() {
 
 function showArray() {
   let output = '';
-  for (let myLoop = 0; myLoop < 3; myLoop++) {
-    output += myArray[myLoop] + '<br>';
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i]) {
+      output += myArray[i] + '<br>';
+    }
   }
   document.getElementById('mydiv01').innerHTML = output;
 }
@@ -90,10 +92,11 @@ function addToArray() {
   for (let i = 0; i < myMax; i++) {
     if (!myArray[i]) {
       myArray[i] = newElement;
-      break;
+      document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array';
+      return;
     }
   }
-  document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array';
+  document.getElementById('mydiv01').innerHTML = 'Array is full';
 }
 
 function clearArray() {
