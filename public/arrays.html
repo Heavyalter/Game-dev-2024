@@ -125,6 +125,30 @@ function showArrayLength() {
   }
   document.getElementById('mydiv01').innerHTML = 'Array length: ' + length;
 }
+
+function findInArray() {
+  let elementToFind = document.getElementById('myFirstname').value;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i] === elementToFind) {
+      document.getElementById('mydiv01').innerHTML = elementToFind + ' found at index ' + i;
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = elementToFind + ' not found in the array';
+}
+
+function replaceInArray() {
+  let elementToReplace = document.getElementById('myFirstname').value;
+  let newElement = prompt('Enter the new element:');
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i] === elementToReplace) {
+      myArray[i] = newElement;
+      document.getElementById('mydiv01').innerHTML = 'Replaced ' + elementToReplace + ' with ' + newElement;
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = elementToReplace + ' not found in the array';
+}
 </script>
 
 <div class="container">
@@ -137,6 +161,8 @@ function showArrayLength() {
     <input type="button" value="Clear Array" onclick="clearArray()"><br><br>
     <input type="button" value="Remove from Array" onclick="removeFromArray()"><br><br>
     <input type="button" value="Show Array Length" onclick="showArrayLength()"><br><br>
+    <input type="button" value="Find in Array" onclick="findInArray()"><br><br>
+    <input type="button" value="Replace in Array" onclick="replaceInArray()"><br><br>
 
     <div id="mydiv01">...</div>
 </div>
