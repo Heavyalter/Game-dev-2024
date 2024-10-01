@@ -139,7 +139,7 @@ function findInArray() {
 
 function replaceInArray() {
   let elementToReplace = document.getElementById('myFirstname').value;
-  let newElement = document.getElementById('newElement').value;
+  let newElement = prompt('Enter the new element:');
   for (let i = 0; i < myMax; i++) {
     if (myArray[i] === elementToReplace) {
       myArray[i] = newElement;
@@ -155,9 +155,6 @@ function replaceInArray() {
     <label for="myFirstname">Input:</label>
     <input type="text" id="myFirstname" value="Marice"><br><br>
 
-    <label for="newElement">New Element:</label>
-    <input type="text" id="newElement" value=""><br><br>
-
     <input type="button" value="Set Array" onclick="setArray()"><br><br>
     <input type="button" value="Show Array" onclick="showArray()"><br><br>
     <input type="button" value="Add to Array" onclick="addToArray()"><br><br>
@@ -169,6 +166,5 @@ function replaceInArray() {
 
     <div id="mydiv01">...</div>
 </div>
-
 </body>
 </html>
