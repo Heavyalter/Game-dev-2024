@@ -43,24 +43,23 @@
 <body>
 <h2 align=center>t1a12-objects-M.M</h2>
 
-  <a href="">good reference to javascript objects</a><br>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects">Good reference to JavaScript objects</a><br>
 
-  objects are stored named variables
+<p>Objects are stored named variables</p>
 
-  <h4> example objects code</h4>
-  <pre>
-    let person = {
-    'first name' : 'Real',
-    'last name' : 'Person',
-    'Age'       :  Human person age,
-    'eyecolor'  :  'ultra violet'
-    }
-    
-    document.getelementbyid('mydiv01').innerHTML = '<br>myperson object has properties: <br>'
-    document.getelementbyid('mydiv01').innerHTML += 'firstname: ' + myperson.firstname + '<br>'
-    document.getelementbyid('mydiv01').innerHTML += 'you do the others <br> '
+<h4>Example objects code</h4>
+<pre>
+let person = {
+    firstName: 'Real',
+    lastName: 'Person',
+    age: 30, // Replace with actual age
+    eyeColor: 'ultra violet'
+};
 
-    }">
-
-  </pre>
+document.getElementById('mydiv01').innerHTML = '<br>myperson object has properties: <br>';
+document.getElementById('mydiv01').innerHTML += 'firstname: ' + person.firstName + '<br>';
+document.getElementById('mydiv01').innerHTML += 'lastname: ' + person.lastName + '<br>';
+document.getElementById('mydiv01').innerHTML += 'age: ' + person.age + '<br>';
+document.getElementById('mydiv01').innerHTML += 'eyecolor: ' + person.eyeColor + '<br>';
+</pre>
 </body>
