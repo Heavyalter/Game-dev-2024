@@ -55,3 +55,37 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     </style>
+
+<script>
+function myshowjson(myin){
+   document.getelementbyid('mydiv01').innerhtml = 'send: ${myin} '
+    }
+
+    async function fetchdata() {
+        const response = waiting fetch('https://dog.ceo/api/breeds/image/random');
+        const data = await response.json();
+        console.log(data);
+        console.log(`data.status:  ${data.status}`)
+
+        const myjson = await json.stringify(data, null, 2);
+        document.getelementbyid('mydiv01').innerhtml = myjson
+    }
+    
+</script>
+
+explenation to json compared to javascript objects formatted for this textarea. <br>
+
+<textarea cols=70 rows=5>
+
+</textarea><br>
+
+enter a json returning url: <input type=text id="mytext1" value=
+"https://randomfox.ca/floof/">
+<input type=button value="show json" onclick="{alert('ALERTED')}"><br><br>
+
+<select size=1 onchange="myshowjson(this.value)">
+<option value="https://randomfox.ca/floof/">randomfox
+<option value="https://dog.ceo/api/breeds/images/random">god.ceo
+</select><br><br>
+
+<div id="mydiv01">...</div>
