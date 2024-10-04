@@ -1,5 +1,10 @@
-    <h1 align="center">Json</h1>
- <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Example</title>
+    <style>
         body {
             background-color: #121212;
             color: #87CEEB; /* Changed to a nice blue color */
@@ -55,37 +60,36 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     </style>
+</head>
+<body>
+    <h1 align="center">JSON Example</h1>
+    <div class="container">
+        <label for="mytext1">Enter a JSON returning URL:</label>
+        <input type="text" id="mytext1" value="https://randomfox.ca/floof/">
+        <input type="button" value="Show JSON" onclick="fetchdata()"><br><br>
 
-<script>
-function myshowjson(myin){
-   document.getelementbyid('mydiv01').innerhtml = 'send: ${myin} '
-    }
+        <select size="1" onchange="myshowjson(this.value)">
+            <option value="https://randomfox.ca/floof/">randomfox</option>
+            <option value="https://dog.ceo/api/breeds/image/random">dog.ceo</option>
+        </select><br><br>
 
-    async function fetchdata() {
-        const response = waiting fetch('https://dog.ceo/api/breeds/image/random');
-        const data = await response.json();
-        console.log(data);
-        console.log(`data.status:  ${data.status}`)
+        <div id="mydiv01">...</div>
+    </div>
 
-        const myjson = await json.stringify(data, null, 2);
-        document.getelementbyid('mydiv01').innerhtml = myjson
-    }
-    
-</script>
+    <script>
+        function myshowjson(myin) {
+            document.getElementById('mydiv01').innerHTML = `send: ${myin}`;
+        }
 
-explenation to json compared to javascript objects formatted for this textarea. <br>
+        async function fetchdata() {
+            const response = await fetch(document.getElementById('mytext1').value);
+            const data = await response.json();
+            console.log(data);
+            console.log(`data.status: ${data.status}`);
 
-<textarea cols=70 rows=5>
-
-</textarea><br>
-
-enter a json returning url: <input type=text id="mytext1" value=
-"https://randomfox.ca/floof/">
-<input type=button value="show json" onclick="{alert('ALERTED')}"><br><br>
-
-<select size=1 onchange="myshowjson(this.value)">
-<option value="https://randomfox.ca/floof/">randomfox
-<option value="https://dog.ceo/api/breeds/images/random">god.ceo
-</select><br><br>
-
-<div id="mydiv01">...</div>
+            const myjson = JSON.stringify(data, null, 2);
+            document.getElementById('mydiv01').innerHTML = myjson;
+        }
+    </script>
+</body>
+</html>
