@@ -65,46 +65,57 @@
             border-radius: 4px;
             transition: background-color 0.3s ease;
         }
+        #message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border-radius: 4px;
+            color: #87CEEB;
+        }
     </style>
 </head>
 <body>
     <h1>HTML Events Demo</h1>
 
-    <button onclick="alert('Button clicked!')">Click Me</button>
-    <button ondblclick="alert('Button double-clicked!')">Double-Click Me</button>
-    <button onmousedown="alert('Mouse button pressed!')">Mouse Down</button>
-    <button onmouseup="alert('Mouse button released!')">Mouse Up</button>
-    <button onmouseover="alert('Mouse over button!')">Mouse Over</button>
-    <button onmouseout="alert('Mouse out of button!')">Mouse Out</button>
+    <button onclick="showMessage('Button clicked!')">Click Me</button>
+    <button ondblclick="showMessage('Button double-clicked!')">Double-Click Me</button>
+    <button onmousedown="showMessage('Mouse button pressed!')">Mouse Down</button>
+    <button onmouseup="showMessage('Mouse button released!')">Mouse Up</button>
+    <button onmouseover="showMessage('Mouse over button!')">Mouse Over</button>
+    <button onmouseout="showMessage('Mouse out of button!')">Mouse Out</button>
 
-    <input type="text" onchange="alert('Text changed!')" placeholder="Type something...">
+    <input type="text" onchange="showMessage('Text changed!')" placeholder="Type something...">
 
     <div class="hover-box" onmouseover="this.style.backgroundColor='lightgreen';" onmouseout="this.style.backgroundColor='lightblue';">
         Hover over me
     </div>
 
-    <select onchange="alert('Selection changed!')">
+    <select onchange="showMessage('Selection changed!')">
         <option value="option1">Option 1</option>
         <option value="option2">Option 2</option>
         <option value="option3">Option 3</option>
     </select>
 
-    <form onsubmit="alert('Form submitted!'); return false;">
+    <form onsubmit="showMessage('Form submitted!'); return false;">
         <input type="text" name="name" placeholder="Your name">
         <input type="submit" value="Submit">
     </form>
 
-    <img src="https://via.placeholder.com/150" alt="Placeholder Image" onload="alert('Image loaded!')" onerror="alert('Image failed to load!')">
+    <img src="https://via.placeholder.com/150" alt="Placeholder Image" onload="showMessage('Image loaded!')" onerror="showMessage('Image failed to load!')">
 
-    <p ondblclick="alert('Paragraph double-clicked!')">Double-click this paragraph.</p>
+    <p ondblclick="showMessage('Paragraph double-clicked!')">Double-click this paragraph.</p>
 
     <input type="text" onfocus="this.style.backgroundColor='yellow';" onblur="this.style.backgroundColor='';" placeholder="Focus on me">
 
     <textarea oninput="document.getElementById('charCount').innerText = this.value.length + ' characters';" placeholder="Type here..."></textarea>
     <p id="charCount">0 characters</p>
 
+    <div id="message"></div>
+
     <script>
-        // Additional JavaScript for more complex events can be added here
+        function showMessage(message) {
+            document.getElementById('message').innerText = message;
+        }
     </script>
 </body>
 </html>
