@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUFF</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #87CEEB; /* Changed to a nice blue color */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #bb86fc;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #03dac6;
+            margin-bottom: 10px;
+            background-color: #2c2c2c;
+            color: #87CEEB;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            background-color: #03dac6;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+        }
+        input[type="button"]:hover {
+            background-color: #bb86fc;
+            transform: scale(1.05);
+        }
+        #div1 {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<h1 align="center">Multilevel Arrays</h1>
 
+<script>
+// Set a few global variables
+let myMax = 6;
+let myArray = new Array(myMax);
+for (let i = 0; i < myMax; i++) {
+  myArray[i] = [];
+}
+
+function setArray() {
+  myArray[0][0] = 'Marice';
+  myArray[1][0] = 'Gabriel';
+  myArray[2][0] = 'Lilith';
+
+  document.getElementById('mydiv01').innerHTML = 'You set the array';
+}
+
+function showArray() {
+  let output = '';
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i][0]) {
+      output += 'Level ' + i + ': ' + myArray[i][0] + '<br>';
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = output;
+}
+
+function addToArray() {
+  let newElement = document.getElementById('myFirstname').value;
+  for (let i = 0; i < myMax; i++) {
+    if (!myArray[i][0]) {
+      myArray[i][0] = newElement;
+      document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array';
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = 'Array is full';
+}
+
+function clearArray() {
+  for (let i = 0; i < myMax; i++) {
+    myArray[i] = [];
+  }
+  document.getElementById('mydiv01').innerHTML = 'Array cleared';
+}
+
+function removeFromArray() {
+  let elementToRemove = document.getElementById('myFirstname').value;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i][0] === elementToRemove) {
+      myArray[i] = [];
+      document.getElementById('mydiv01').innerHTML = 'Removed ' + elementToRemove + ' from the array';
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = elementToRemove + ' not found in the array';
+}
+
+function showArrayLength() {
+  let length = 0;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i][0]) {
+      length++;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = 'Array length: ' + length;
+}
+
+function findInArray() {
+  let elementToFind = document.getElementById('myFirstname').value;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i][0] === elementToFind) {
+      document.getElementById('mydiv01').innerHTML = elementToFind + ' found at level ' + i;
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = elementToFind + ' not found in the array';
+}
+
+function replaceInArray() {
+  let elementToReplace = document.getElementById('myFirstname').value;
+  let newElement = document.getElementById('newElement').value;
+  for (let i = 0; i < myMax; i++) {
+    if (myArray[i][0] === elementToReplace) {
+      myArray[i][0] = newElement;
+      document.getElementById('mydiv01').innerHTML = 'Replaced ' + elementToReplace + ' with ' + newElement;
+      return;
+    }
+  }
+  document.getElementById('mydiv01').innerHTML = elementToReplace + ' not found in the array';
+}
+</script>
+
+<div class="container">
+    <label for="myFirstname">Input:</label>
+    <input type="text" id="myFirstname" value="Marice"><br><br>
+
+    <label for="newElement">Replace In Array Text Field:</label>
+    <input type="text" id="newElement" value=""><br><br>
+
+    <input type="button" value="Set Array" onclick="setArray()"><br><br>
+    <input type="button" value="Show Array" onclick="showArray()"><br><br>
+    <input type="button" value="Add to Array" onclick="addToArray()"><br><br>
+    <input type="button" value="Clear Array" onclick="clearArray()"><br><br>
+    <input type="button" value="Remove from Array" onclick="removeFromArray()"><br><br>
+    <input type="button" value="Show Array Length" onclick="showArrayLength()"><br><br>
+    <input type="button" value="Find in Array" onclick="findInArray()"><br><br>
+    <input type="button" value="Replace in Array" onclick="replaceInArray()"><br><br>
+
+    <div id="
