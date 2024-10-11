@@ -69,7 +69,7 @@
 let myMax = 6;
 let myArray = new Array(myMax);
 for (let i = 0; i < myMax; i++) {
-  myArray[i] = [];
+  myArray[i] = new Array(myMax).fill('');
 }
 
 function setArray() {
@@ -83,8 +83,10 @@ function setArray() {
 function showArray() {
   let output = '';
   for (let i = 0; i < myMax; i++) {
-    if (myArray[i][0]) {
-      output += 'Level ' + i + ': ' + myArray[i][0] + '<br>';
+    for (let j = 0; j < myMax; j++) {
+      if (myArray[i][j]) {
+        output += 'Level ' + i + '-' + j + ': ' + myArray[i][j] + '<br>';
+      }
     }
   }
   document.getElementById('mydiv01').innerHTML = output;
@@ -93,10 +95,12 @@ function showArray() {
 function addToArray() {
   let newElement = document.getElementById('myFirstname').value;
   for (let i = 0; i < myMax; i++) {
-    if (!myArray[i][0]) {
-      myArray[i][0] = newElement;
-      document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array';
-      return;
+    for (let j = 0; j < myMax; j++) {
+      if (!myArray[i][j]) {
+        myArray[i][j] = newElement;
+        document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array at level ' + i + '-' + j;
+        return;
+      }
     }
   }
   document.getElementById('mydiv01').innerHTML = 'Array is full';
@@ -104,7 +108,9 @@ function addToArray() {
 
 function clearArray() {
   for (let i = 0; i < myMax; i++) {
-    myArray[i] = [];
+    for (let j = 0; j < myMax; j++) {
+      myArray[i][j] = '';
+    }
   }
   document.getElementById('mydiv01').innerHTML = 'Array cleared';
 }
@@ -112,10 +118,12 @@ function clearArray() {
 function removeFromArray() {
   let elementToRemove = document.getElementById('myFirstname').value;
   for (let i = 0; i < myMax; i++) {
-    if (myArray[i][0] === elementToRemove) {
-      myArray[i] = [];
-      document.getElementById('mydiv01').innerHTML = 'Removed ' + elementToRemove + ' from the array';
-      return;
+    for (let j = 0; j < myMax; j++) {
+      if (myArray[i][j] === elementToRemove) {
+        myArray[i][j] = '';
+        document.getElementById('mydiv01').innerHTML = 'Removed ' + elementToRemove + ' from the array at level ' + i + '-' + j;
+        return;
+      }
     }
   }
   document.getElementById('mydiv01').innerHTML = elementToRemove + ' not found in the array';
@@ -124,8 +132,10 @@ function removeFromArray() {
 function showArrayLength() {
   let length = 0;
   for (let i = 0; i < myMax; i++) {
-    if (myArray[i][0]) {
-      length++;
+    for (let j = 0; j < myMax; j++) {
+      if (myArray[i][j]) {
+        length++;
+      }
     }
   }
   document.getElementById('mydiv01').innerHTML = 'Array length: ' + length;
@@ -134,9 +144,11 @@ function showArrayLength() {
 function findInArray() {
   let elementToFind = document.getElementById('myFirstname').value;
   for (let i = 0; i < myMax; i++) {
-    if (myArray[i][0] === elementToFind) {
-      document.getElementById('mydiv01').innerHTML = elementToFind + ' found at level ' + i;
-      return;
+    for (let j = 0; j < myMax; j++) {
+      if (myArray[i][j] === elementToFind) {
+        document.getElementById('mydiv01').innerHTML = elementToFind + ' found at level ' + i + '-' + j;
+        return;
+      }
     }
   }
   document.getElementById('mydiv01').innerHTML = elementToFind + ' not found in the array';
@@ -146,10 +158,12 @@ function replaceInArray() {
   let elementToReplace = document.getElementById('myFirstname').value;
   let newElement = document.getElementById('newElement').value;
   for (let i = 0; i < myMax; i++) {
-    if (myArray[i][0] === elementToReplace) {
-      myArray[i][0] = newElement;
-      document.getElementById('mydiv01').innerHTML = 'Replaced ' + elementToReplace + ' with ' + newElement;
-      return;
+    for (let j = 0; j < myMax; j++) {
+      if (myArray[i][j] === elementToReplace) {
+        myArray[i][j] = newElement;
+        document.getElementById('mydiv01').innerHTML = 'Replaced ' + elementToReplace + ' with ' + newElement + ' at level ' + i + '-' + j;
+        return;
+      }
     }
   }
   document.getElementById('mydiv01').innerHTML = elementToReplace + ' not found in the array';
@@ -172,4 +186,7 @@ function replaceInArray() {
     <input type="button" value="Find in Array" onclick="findInArray()"><br><br>
     <input type="button" value="Replace in Array" onclick="replaceInArray()"><br><br>
 
-    <div id="
+    <div id="mydiv01"></div>
+</div>
+</body>
+</html>
