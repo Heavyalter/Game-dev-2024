@@ -98,18 +98,14 @@ function showArray() {
   document.getElementById('mydiv01').innerHTML = output;
 }
 
-function addToArray() {
+function addToArray(level1, level2) {
   let newElement = document.getElementById('myFirstname').value;
-  for (let i = 0; i < myMax; i++) {
-    for (let j = 0; j < myMax; j++) {
-      if (!myArray[i][j]) {
-        myArray[i][j] = newElement;
-        document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array at level ' + i + '-' + j;
-        return;
-      }
-    }
+  if (!myArray[level1][level2]) {
+    myArray[level1][level2] = newElement;
+    document.getElementById('mydiv01').innerHTML = 'Added ' + newElement + ' to the array at level ' + level1 + '-' + level2;
+  } else {
+    document.getElementById('mydiv01').innerHTML = 'Position ' + level1 + '-' + level2 + ' is already occupied';
   }
-  document.getElementById('mydiv01').innerHTML = 'Array is full';
 }
 
 function clearArray() {
@@ -121,18 +117,13 @@ function clearArray() {
   document.getElementById('mydiv01').innerHTML = 'Array cleared';
 }
 
-function removeFromArray() {
-  let elementToRemove = document.getElementById('myFirstname').value;
-  for (let i = 0; i < myMax; i++) {
-    for (let j = 0; j < myMax; j++) {
-      if (myArray[i][j] === elementToRemove) {
-        myArray[i][j] = '';
-        document.getElementById('mydiv01').innerHTML = 'Removed ' + elementToRemove + ' from the array at level ' + i + '-' + j;
-        return;
-      }
-    }
+function removeFromArray(level1, level2) {
+  if (myArray[level1][level2]) {
+    document.getElementById('mydiv01').innerHTML = 'Removed ' + myArray[level1][level2] + ' from the array at level ' + level1 + '-' + level2;
+    myArray[level1][level2] = '';
+  } else {
+    document.getElementById('mydiv01').innerHTML = 'No element found at level ' + level1 + '-' + level2;
   }
-  document.getElementById('mydiv01').innerHTML = elementToRemove + ' not found in the array';
 }
 
 function showArrayLength() {
@@ -160,19 +151,14 @@ function findInArray() {
   document.getElementById('mydiv01').innerHTML = elementToFind + ' not found in the array';
 }
 
-function replaceInArray() {
-  let elementToReplace = document.getElementById('myFirstname').value;
+function replaceInArray(level1, level2) {
   let newElement = document.getElementById('newElement').value;
-  for (let i = 0; i < myMax; i++) {
-    for (let j = 0; j < myMax; j++) {
-      if (myArray[i][j] === elementToReplace) {
-        myArray[i][j] = newElement;
-        document.getElementById('mydiv01').innerHTML = 'Replaced ' + elementToReplace + ' with ' + newElement + ' at level ' + i + '-' + j;
-        return;
-      }
-    }
+  if (myArray[level1][level2]) {
+    document.getElementById('mydiv01').innerHTML = 'Replaced ' + myArray[level1][level2] + ' with ' + newElement + ' at level ' + level1 + '-' + level2;
+    myArray[level1][level2] = newElement;
+  } else {
+    document.getElementById('mydiv01').innerHTML = 'No element found at level ' + level1 + '-' + level2 + ' to replace';
   }
-  document.getElementById('mydiv01').innerHTML = elementToReplace + ' not found in the array';
 }
 </script>
 
@@ -186,15 +172,6 @@ function replaceInArray() {
     <div class="buttons">
         <input type="button" value="Set Array" onclick="setArray()">
         <input type="button" value="Show Array" onclick="showArray()">
-        <input type="button" value="Add to Array" onclick="addToArray()">
-        <input type="button" value="Clear Array" onclick="clearArray()">
-        <input type="button" value="Remove from Array" onclick="removeFromArray()">
-        <input type="button" value="Show Array Length" onclick="showArrayLength()">
-        <input type="button" value="Find in Array" onclick="findInArray()">
-        <input type="button" value="Replace in Array" onclick="replaceInArray()">
-    </div>
-
-    <div id="mydiv01"></div>
-</div>
-</body>
-</html>
+        <input type="button" value="Add to Array Level 0-0" onclick="addToArray(0,0)">
+        <input type="button" value="Add to Array Level 1-1" onclick="addToArray(1,1)">
+        <input type="button" value="Add to Array Level 2-2" onclick="add
