@@ -40,6 +40,35 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #03dac6;
+            margin-bottom: 10px;
+            background-color: #2c2c2c;
+            color: #87CEEB;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            background-color: #03dac6;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        input[type="button"]:hover {
+            background-color: #bb86fc;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -55,7 +84,27 @@ let person = {
     eyeColor: 'ultra violet'
 };
 </pre>
+<div class="container">
+    <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" value="Real">
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" value="Person">
+    </div>
+    <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="text" id="age" value="30">
+    </div>
+    <div class="form-group">
+        <label for="eyeColor">Eye Color:</label>
+        <input type="text" id="eyeColor" value="ultra violet">
+    </div>
+    <input type="button" value="Update Object" onclick="updateObject()">
+</div>
 <div id="mydiv01"></div>
+
 <script>
     let person = {
         firstName: 'Real',
@@ -63,12 +112,24 @@ let person = {
         age: 30, // Replace with actual age
         eyeColor: 'ultra violet'
     };
-    
-    document.getElementById('mydiv01').innerHTML = '<br>myperson object has properties: <br>';
-    document.getElementById('mydiv01').innerHTML += 'firstname: ' + person.firstName + '<br>';
-    document.getElementById('mydiv01').innerHTML += 'lastname: ' + person.lastName + '<br>';
-    document.getElementById('mydiv01').innerHTML += 'age: ' + person.age + '<br>';
-    document.getElementById('mydiv01').innerHTML += 'eyecolor: ' + person.eyeColor + '<br>';
+
+    function displayObject() {
+        document.getElementById('mydiv01').innerHTML = '<br>myperson object has properties: <br>';
+        document.getElementById('mydiv01').innerHTML += 'firstname: ' + person.firstName + '<br>';
+        document.getElementById('mydiv01').innerHTML += 'lastname: ' + person.lastName + '<br>';
+        document.getElementById('mydiv01').innerHTML += 'age: ' + person.age + '<br>';
+        document.getElementById('mydiv01').innerHTML += 'eyecolor: ' + person.eyeColor + '<br>';
+    }
+
+    function updateObject() {
+        person.firstName = document.getElementById('firstName').value;
+        person.lastName = document.getElementById('lastName').value;
+        person.age = parseInt(document.getElementById('age').value);
+        person.eyeColor = document.getElementById('eyeColor').value;
+        displayObject();
+    }
+
+    displayObject();
 </script>
 </body>
 </html>
