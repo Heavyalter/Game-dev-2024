@@ -108,13 +108,14 @@
 
 <script>
     let person = {
-        first Name: 'Real',
-        last Name: 'Person',
+        firstName: 'Real',
+        lastName: 'Person',
         age: 30, // Replace with actual age
-        eye Color: 'ultra violet'
+        eyeColor: 'ultra violet'
     };
 
     function displayObject() {
+        document.getElementById('mydiv01').innerHTML = '<br>myperson object has properties: <br>';
         document.getElementById('mydiv01').innerHTML += 'first name: ' + person.firstName + '<br>';
         document.getElementById('mydiv01').innerHTML += 'last name: ' + person.lastName + '<br>';
         document.getElementById('mydiv01').innerHTML += 'age: ' + person.age + '<br>';
@@ -122,10 +123,10 @@
     }
 
     function updateObject() {
-        person.first Name = document.getElementById('firstName').value;
-        person.last Name = document.getElementById('lastName').value;
+        person.firstName = document.getElementById('firstName').value;
+        person.lastName = document.getElementById('lastName').value;
         person.age = parseInt(document.getElementById('age').value);
-        person.eye Color = document.getElementById('eyeColor').value;
+        person.eyeColor = document.getElementById('eyeColor').value;
         displayObject();
     }
 
