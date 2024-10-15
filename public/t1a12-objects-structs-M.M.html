@@ -44,11 +44,8 @@
 </head>
 <body>
 <h2 align="center">t1a12-objects-M.M</h2>
-
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects">Good reference to JavaScript objects</a><br>
-
 <p>Objects are stored named variables</p>
-
 <h4>Example objects code</h4>
 <pre>
 let person = {
@@ -58,16 +55,20 @@ let person = {
     eyeColor: 'ultra violet'
 };
 </pre>
-
 <div id="mydiv01"></div>
-
 <script>
+    let person = {
+        firstName: 'Real',
+        lastName: 'Person',
+        age: 30, // Replace with actual age
+        eyeColor: 'ultra violet'
+    };
+    
     document.getElementById('mydiv01').innerHTML = '<br>myperson object has properties: <br>';
     document.getElementById('mydiv01').innerHTML += 'firstname: ' + person.firstName + '<br>';
     document.getElementById('mydiv01').innerHTML += 'lastname: ' + person.lastName + '<br>';
     document.getElementById('mydiv01').innerHTML += 'age: ' + person.age + '<br>';
     document.getElementById('mydiv01').innerHTML += 'eyecolor: ' + person.eyeColor + '<br>';
 </script>
-
 </body>
 </html>
