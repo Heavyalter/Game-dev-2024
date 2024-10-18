@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ta18-extend-class-by-fred</title>
+</head>
+<body>
+    <h2 align="center">ta18-extend-class-by-fred.html</h2>
+    
+    <script>
+        class myAnimal {
+            constructor(passName, passAge) {
+                this.myName = passName;
+                this.myAge = passAge;
+            }
+
+            myShow() {
+                document.getElementById('myDiv01').innerHTML = 'Hello ' + this.myName + '<br>';
+            }
+        } // end class myAnimal
+
+        class myCat extends myAnimal {
+            myShow() {
+                document.getElementById('myDiv01').innerHTML = this.myName + ' is a great cat<br>';
+            }
+        } // end extended class myCat
+    </script>
+
+    <input type="button" value="Example Class Set and Show Class Animal" onClick="{ myDog = new myAnimal('Snickers', 5); myDog.myShow(); }"><br><br>
+    <input type="text" id="myText01" value="may be useful later"><br><br>
+    <input type="button" value="Example Extend Class Animal as Cat" onClick="{ myPet = new myCat('Fluffy', 14); myPet.myShow(); }"><br><br>
+    <div id="myDiv01">...</div>
+</body>
+</html>
 
