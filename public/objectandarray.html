@@ -1,30 +1,21 @@
- <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People and Pets List</title>
+    <style>
         body {
             background-color: #121212;
             color: #ffffff;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 20px;
         }
         h2 {
             color: #bb86fc;
-        }
-        a {
-            color: #03dac6;
-            text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        a:hover {
-            text-decoration: underline;
-            color: #bb86fc;
-            transform: scale(1.1);
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
+            text-align: center;
+            font-size: 2em;
         }
         .container {
             max-width: 800px;
@@ -34,23 +25,85 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #03dac6;
+        }
+        th {
+            background-color: #03dac6;
+            color: #121212;
+        }
     </style>
-<h1 align=center>Objects and arrays-M.M</h1>
+</head>
+<body>
+    <h2>People and Pets List</h2>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Eye Color</th>
+                    <th>Pets</th>
+                </tr>
+            </thead>
+            <tbody id="peopleTable">
+            </tbody>
+        </table>
+    </div>
 
-<textarea rows=4 cols=70>
- let myarray = [5, 2, 8, 2, 1];
-let myobject = {name: 'Mat', age: 27, profession: 'Artist'};
+    <script>
+        let people = [
+            { 
+                name: 'Alice', 
+                age: 30, 
+                eyeColor: 'blue', 
+                pets: [
+                    { type: 'Dog', name: 'Max', age: 5 }, 
+                    { type: 'Cat', name: 'Whiskers', age: 3 }
+                ] 
+            },
+            { 
+                name: 'Bob', 
+                age: 25, 
+                eyeColor: 'green', 
+                pets: [
+                    { type: 'Parrot', name: 'Polly', age: 2 }
+                ] 
+            },
+            { 
+                name: 'Charlie', 
+                age: 35, 
+                eyeColor: 'brown', 
+                pets: [
+                    { type: 'Fish', name: 'Goldie', age: 1 }, 
+                    { type: 'Rabbit', name: 'Floppy', age: 4 }
+                ] 
+            }
+        ];
 
-let myobject2 = {
-  name: 'Alice',
-  hobbies: ['reading', 'coding', 'hiking'],
-  age: 25
-};
+        function displayPeople() {
+            let tableBody = document.getElementById('peopleTable');
+            tableBody.innerHTML = ''; // Clear the table body
 
-let array = [
-  { name: "bob", age: 28 },
-  { name: "charlie", age: 32 }
-];
+            people.forEach(person => {
+                let petsList = person.pets.map(pet => `${pet.type}: ${pet.name} (${pet.age} years)`).join('<br>');
+                let row = `<tr>
+                    <td>${person.name}</td>
+                    <td>${person.age}</td>
+                    <td>${person.eyeColor}</td>
+                    <td>${petsList}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
 
-
-</textarea><br><br>
+        displayPeople();
+    </script>
+</body>
+</html>
