@@ -84,31 +84,31 @@
 
     <script>
         let people = [
-            { 
-                name: 'Alice', 
-                age: 30, 
-                eyeColor: 'blue', 
+            {
+                name: 'Alice',
+                age: 30,
+                eyeColor: 'blue',
                 pets: [
-                    { type: 'Dog', name: 'Max', age: 5 }, 
+                    { type: 'Dog', name: 'Max', age: 5 },
                     { type: 'Cat', name: 'Whiskers', age: 3 }
-                ] 
+                ]
             },
-            { 
-                name: 'Bob', 
-                age: 25, 
-                eyeColor: 'green', 
+            {
+                name: 'Bob',
+                age: 25,
+                eyeColor: 'green',
                 pets: [
                     { type: 'Parrot', name: 'Polly', age: 2 }
-                ] 
+                ]
             },
-            { 
-                name: 'Charlie', 
-                age: 35, 
-                eyeColor: 'brown', 
+            {
+                name: 'Charlie',
+                age: 35,
+                eyeColor: 'brown',
                 pets: [
-                    { type: 'Fish', name: 'Goldie', age: 1 }, 
+                    { type: 'Fish', name: 'Goldie', age: 1 },
                     { type: 'Rabbit', name: 'Floppy', age: 4 }
-                ] 
+                ]
             }
         ];
 
@@ -134,6 +134,26 @@
 
         function addPerson() {
             let name = document.getElementById('nameInput').value;
-            let age = document.getElementById('ageInput').value;
+            let age = parseInt(document.getElementById('ageInput').value);
             let eyeColor = document.getElementById('eyeColorInput').value;
             let petsInput = document.getElementById('petsInput').value;
+            let pets = petsInput.split(',').map(pet => {
+                let [type, name, age] = pet.trim().split(' ');
+                return { type, name, age: parseInt(age) };
+            });
+
+            people.push({ name, age, eyeColor, pets });
+            displayPeople();
+        }
+
+        function editPerson(index) {
+            let person = people[index];
+            document.getElementById('nameInput').value = person.name;
+            document.getElementById('ageInput').value = person.age;
+            document.getElementById('eyeColorInput').value = person.eyeColor;
+            document.getElementById('petsInput').value = person.pets.map(pet => `${pet.type} ${pet.name} ${pet.age}`).join(', ');
+
+            people.splice(index, 1); // Remove the person from the array
+            displayPeople();
+        }
+
