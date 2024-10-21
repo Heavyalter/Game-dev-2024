@@ -131,29 +131,32 @@
                 tableBody.innerHTML += row;
             });
         }
+function addPerson() {
+    let name = document.getElementById('nameInput').value;
+    let age = parseInt(document.getElementById('ageInput').value);
+    let eyeColor = document.getElementById('eyeColorInput').value;
+    let petsInput = document.getElementById('petsInput').value;
 
-        function addPerson() {
-            let name = document.getElementById('nameInput').value;
-            let age = parseInt(document.getElementById('ageInput').value);
-            let eyeColor = document.getElementById('eyeColorInput').value;
-            let petsInput = document.getElementById('petsInput').value;
-            let pets = petsInput.split(',').map(pet => {
-                let [type, name, age] = pet.trim().split(' ');
-                return { type, name, age: parseInt(age) };
-            });
-
-            people.push({ name, age, eyeColor, pets });
-            displayPeople();
+    let pets = petsInput.split(',').map(pet => {
+        let parts = pet.trim().split(' ');
+        if (parts.length === 3) {
+            let [type, name, age] = parts;
+            return { type, name, age: parseInt(age) };
+        } else {
+            // Return an empty object if the format is wrong
+            return {};
         }
+    }).filter(pet => Object.keys(pet).length > 0); // Filter out any empty objects
 
-        function editPerson(index) {
-            let person = people[index];
-            document.getElementById('nameInput').value = person.name;
-            document.getElementById('ageInput').value = person.age;
-            document.getElementById('eyeColorInput').value = person.eyeColor;
-            document.getElementById('petsInput').value = person.pets.map(pet => `${pet.type} ${pet.name} ${pet.age}`).join(', ');
+    people.push({ name, age, eyeColor, pets });
+    displayPeople();
 
-            people.splice(index, 1); // Remove the person from the array
-            displayPeople();
-        }
+    // Clear the input fields after adding
+    document.getElementById('nameInput').value = '';
+    document.getElementById('ageInput').value = '';
+    document.getElementById('eyeColorInput').value = '';
+    document.getElementById('petsInput').value = '';
+}
+
+
 
