@@ -38,6 +38,18 @@
             background-color: #03dac6;
             color: #121212;
         }
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #03dac6;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #bb86fc;
+        }
     </style>
 </head>
 <body>
@@ -50,11 +62,24 @@
                     <th>Age</th>
                     <th>Eye Color</th>
                     <th>Pets</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="peopleTable">
             </tbody>
         </table>
+        <div>
+            <h3>Add New Person</h3>
+            <label for="nameInput">Name:</label>
+            <input type="text" id="nameInput"><br>
+            <label for="ageInput">Age:</label>
+            <input type="number" id="ageInput"><br>
+            <label for="eyeColorInput">Eye Color:</label>
+            <input type="text" id="eyeColorInput"><br>
+            <label for="petsInput">Pets (comma-separated):</label>
+            <input type="text" id="petsInput"><br>
+            <button onclick="addPerson()">Add Person</button>
+        </div>
     </div>
 
     <script>
@@ -91,19 +116,24 @@
             let tableBody = document.getElementById('peopleTable');
             tableBody.innerHTML = ''; // Clear the table body
 
-            people.forEach(person => {
+            people.forEach((person, index) => {
                 let petsList = person.pets.map(pet => `${pet.type}: ${pet.name} (${pet.age} years)`).join('<br>');
                 let row = `<tr>
                     <td>${person.name}</td>
                     <td>${person.age}</td>
                     <td>${person.eyeColor}</td>
                     <td>${petsList}</td>
+                    <td>
+                        <button onclick="editPerson(${index})">Edit</button>
+                        <button onclick="deletePerson(${index})">Delete</button>
+                    </td>
                 </tr>`;
                 tableBody.innerHTML += row;
             });
         }
 
-        displayPeople();
-    </script>
-</body>
-</html>
+        function addPerson() {
+            let name = document.getElementById('nameInput').value;
+            let age = document.getElementById('ageInput').value;
+            let eyeColor = document.getElementById('eyeColorInput').value;
+            let petsInput = document.getElementById('petsInput').value;
