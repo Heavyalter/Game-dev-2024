@@ -43,6 +43,8 @@
             { name: 'Charlie', age: 35, eyeColor: 'brown', pets: [{ type: 'Fish', name: 'Goldie', age: 1 }, { type: 'Rabbit', name: 'Floppy', age: 4 }] }
         ];
 
+        let currentEditIndex = null;
+
         function displayPeople() {
             const tableBody = document.getElementById('peopleTable');
             tableBody.innerHTML = people.map((person, index) => `
@@ -68,9 +70,33 @@
                 return parts.length === 3 ? { type: parts[0], name: parts[1], age: parseInt(parts[2]) } : null;
             }).filter(Boolean);
 
-            people.push({ name, age, eyeColor, pets });
+            if (currentEditIndex !== null) {
+                // Update existing person
+                people[currentEditIndex] = { name, age, eyeColor, pets };
+                currentEditIndex = null;
+            } else {
+                // Add new person
+                people.push({ name, age, eyeColor, pets });
+            }
             displayPeople();
+            clearInputs();
+        }
 
+        function editPerson(index) {
+            const person = people[index];
+            document.getElementById('nameInput').value = person.name;
+            document.getElementById('ageInput').value = person.age;
+            document.getElementById('eyeColorInput').value = person.eyeColor;
+            document.getElementById('petsInput').value = person.pets.map(pet => `${pet.type} ${pet.name} ${pet.age}`).join(', ');
+            currentEditIndex = index;
+        }
+
+        function deletePerson(index) {
+            people.splice(index, 1);
+            displayPeople();
+        }
+
+        function clearInputs() {
             document.getElementById('nameInput').value = '';
             document.getElementById('ageInput').value = '';
             document.getElementById('eyeColorInput').value = '';
