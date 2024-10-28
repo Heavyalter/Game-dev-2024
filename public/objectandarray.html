@@ -27,12 +27,12 @@
             <tbody id="peopleTable"></tbody>
         </table>
         <div>
-            <h3>Add New Person</h3>
+            <h3 id="formTitle">Add New Person</h3>
             <label>Name:<input type="text" id="nameInput"></label><br>
             <label>Age:<input type="number" id="ageInput"></label><br>
             <label>Eye Color:<input type="text" id="eyeColorInput"></label><br>
             <label>Pets (comma-separated):<input type="text" id="petsInput"></label><br>
-            <button onclick="addPerson()">Add Person</button>
+            <button id="actionButton" onclick="addPerson()">Add Person</button>
         </div>
     </div>
 
@@ -71,11 +71,10 @@
             }).filter(Boolean);
 
             if (currentEditIndex !== null) {
-                // Update existing person
                 people[currentEditIndex] = { name, age, eyeColor, pets };
                 currentEditIndex = null;
+                setFormTitle('Add New Person', 'Add Person');
             } else {
-                // Add new person
                 people.push({ name, age, eyeColor, pets });
             }
             displayPeople();
@@ -89,6 +88,7 @@
             document.getElementById('eyeColorInput').value = person.eyeColor;
             document.getElementById('petsInput').value = person.pets.map(pet => `${pet.type} ${pet.name} ${pet.age}`).join(', ');
             currentEditIndex = index;
+            setFormTitle('Edit Person', 'Confirm Changes');
         }
 
         function deletePerson(index) {
@@ -101,6 +101,11 @@
             document.getElementById('ageInput').value = '';
             document.getElementById('eyeColorInput').value = '';
             document.getElementById('petsInput').value = '';
+        }
+
+        function setFormTitle(title, buttonText) {
+            document.getElementById('formTitle').textContent = title;
+            document.getElementById('actionButton').textContent = buttonText;
         }
 
         displayPeople();
