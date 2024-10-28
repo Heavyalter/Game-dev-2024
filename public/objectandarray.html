@@ -5,51 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>People and Pets List</title>
     <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        h2 {
-            color: #bb86fc;
-            text-align: center;
-            font-size: 2em;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #03dac6;
-        }
-        th {
-            background-color: #03dac6;
-            color: #121212;
-        }
-        button {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            background-color: #03dac6;
-            color: #121212;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #bb86fc;
-        }
+        body { background: #121212; color: #fff; font-family: 'Roboto', sans-serif; margin: 0; padding: 20px; }
+        h2 { color: #bb86fc; text-align: center; font-size: 2em; }
+        .container { max-width: 800px; margin: auto; padding: 20px; background: #1e1e1e; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #03dac6; }
+        th { background: #03dac6; color: #121212; }
+        button { padding: 5px 10px; border: none; border-radius: 4px; background: #03dac6; color: #121212; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #bb86fc; }
     </style>
 </head>
 <body>
@@ -58,105 +21,63 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Eye Color</th>
-                    <th>Pets</th>
-                    <th>Actions</th>
+                    <th>Name</th><th>Age</th><th>Eye Color</th><th>Pets</th><th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="peopleTable">
-            </tbody>
+            <tbody id="peopleTable"></tbody>
         </table>
         <div>
             <h3>Add New Person</h3>
-            <label for="nameInput">Name:</label>
-            <input type="text" id="nameInput"><br>
-            <label for="ageInput">Age:</label>
-            <input type="number" id="ageInput"><br>
-            <label for="eyeColorInput">Eye Color:</label>
-            <input type="text" id="eyeColorInput"><br>
-            <label for="petsInput">Pets (comma-separated):</label>
-            <input type="text" id="petsInput"><br>
+            <label>Name:<input type="text" id="nameInput"></label><br>
+            <label>Age:<input type="number" id="ageInput"></label><br>
+            <label>Eye Color:<input type="text" id="eyeColorInput"></label><br>
+            <label>Pets (comma-separated):<input type="text" id="petsInput"></label><br>
             <button onclick="addPerson()">Add Person</button>
         </div>
     </div>
 
     <script>
         let people = [
-            {
-                name: 'Alice',
-                age: 30,
-                eyeColor: 'blue',
-                pets: [
-                    { type: 'Dog', name: 'Max', age: 5 },
-                    { type: 'Cat', name: 'Whiskers', age: 3 }
-                ]
-            },
-            {
-                name: 'Bob',
-                age: 25,
-                eyeColor: 'green',
-                pets: [
-                    { type: 'Parrot', name: 'Polly', age: 2 }
-                ]
-            },
-            {
-                name: 'Charlie',
-                age: 35,
-                eyeColor: 'brown',
-                pets: [
-                    { type: 'Fish', name: 'Goldie', age: 1 },
-                    { type: 'Rabbit', name: 'Floppy', age: 4 }
-                ]
-            }
+            { name: 'Alice', age: 30, eyeColor: 'blue', pets: [{ type: 'Dog', name: 'Max', age: 5 }, { type: 'Cat', name: 'Whiskers', age: 3 }] },
+            { name: 'Bob', age: 25, eyeColor: 'green', pets: [{ type: 'Parrot', name: 'Polly', age: 2 }] },
+            { name: 'Charlie', age: 35, eyeColor: 'brown', pets: [{ type: 'Fish', name: 'Goldie', age: 1 }, { type: 'Rabbit', name: 'Floppy', age: 4 }] }
         ];
 
         function displayPeople() {
-            let tableBody = document.getElementById('peopleTable');
-            tableBody.innerHTML = ''; // Clear the table body
-
-            people.forEach((person, index) => {
-                let petsList = person.pets.map(pet => `${pet.type}: ${pet.name} (${pet.age} years)`).join('<br>');
-                let row = `<tr>
+            const tableBody = document.getElementById('peopleTable');
+            tableBody.innerHTML = people.map((person, index) => `
+                <tr>
                     <td>${person.name}</td>
                     <td>${person.age}</td>
                     <td>${person.eyeColor}</td>
-                    <td>${petsList}</td>
+                    <td>${person.pets.map(pet => `${pet.type}: ${pet.name} (${pet.age} years)`).join('<br>')}</td>
                     <td>
                         <button onclick="editPerson(${index})">Edit</button>
                         <button onclick="deletePerson(${index})">Delete</button>
                     </td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
+                </tr>
+            `).join('');
         }
-function addPerson() {
-    let name = document.getElementById('nameInput').value;
-    let age = parseInt(document.getElementById('ageInput').value);
-    let eyeColor = document.getElementById('eyeColorInput').value;
-    let petsInput = document.getElementById('petsInput').value;
 
-    let pets = petsInput.split(',').map(pet => {
-        let parts = pet.trim().split(' ');
-        if (parts.length === 3) {
-            let [type, name, age] = parts;
-            return { type, name, age: parseInt(age) };
-        } else {
-            // Return an empty object if the format is wrong
-            return {};
+        function addPerson() {
+            const name = document.getElementById('nameInput').value;
+            const age = parseInt(document.getElementById('ageInput').value);
+            const eyeColor = document.getElementById('eyeColorInput').value;
+            const pets = document.getElementById('petsInput').value.split(',').map(pet => {
+                const parts = pet.trim().split(' ');
+                return parts.length === 3 ? { type: parts[0], name: parts[1], age: parseInt(parts[2]) } : null;
+            }).filter(Boolean);
+
+            people.push({ name, age, eyeColor, pets });
+            displayPeople();
+
+            document.getElementById('nameInput').value = '';
+            document.getElementById('ageInput').value = '';
+            document.getElementById('eyeColorInput').value = '';
+            document.getElementById('petsInput').value = '';
         }
-    }).filter(pet => Object.keys(pet).length > 0); // Filter out any empty objects
 
-    people.push({ name, age, eyeColor, pets });
-    displayPeople();
-
-    // Clear the input fields after adding
-    document.getElementById('nameInput').value = '';
-    document.getElementById('ageInput').value = '';
-    document.getElementById('eyeColorInput').value = '';
-    document.getElementById('petsInput').value = '';
-}
-
-
-
+        displayPeople();
+    </script>
+</body>
+</html>
