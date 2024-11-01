@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>t2a19-move-background-Micah.html</title>
+    <style>
+        body {
+            background-repeat: repeat;
+            background-size: 80%;
+            background-image: url('https://external-preview.redd.it/fhkU2h_KoqELvDHZPjgjaSnD_dJjnDVj3qE0-b7Ih3g.jpg?auto=webp&s=4dfd06d8ae8ead160b7679c77209263ade1c86fb');
+        }
+        img {
+            position: relative;
+            width: 200px;
+            height: 160px;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
-<body id="myBody" style="background-repeat: repeat; background-size: 80%;" background="https://external-preview.redd.it/fhkU2h_KoqELvDHZPjgjaSnD_dJjnDVj3qE0-b7Ih3g.jpg?auto=webp&s=4dfd06d8ae8ead160b7679c77209263ade1c86fb">
+<body id="myBody">
     <h1 align="center">t2a19-move-background-M.M.html</h1>
     
     <script>
@@ -36,7 +50,7 @@
 
         function moveImageRight() {
             let imageElement = document.getElementById('myImage01');
-            imageElement.style.left = (parseInt(imageElement.style.left) - 10) + 'px';
+            imageElement.style.left = (parseInt(imageElement.style.left) + 10) + 'px';
         }
 
         function autoMoveRight() {
@@ -44,37 +58,44 @@
             myClock02 = setInterval(function() { document.getElementById('myButton02').click(); }, 30);
         }
 
-        function moveImage(dx, dy) {
+        let keys = {};
+        let moveSpeed = 2;
+
+        window.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+
+        function moveImage() {
             let imageElement = document.getElementById('myImage01');
-            let left = parseInt(imageElement.style.left) + dx;
-            let top = parseInt(imageElement.style.top) + dy;
-            imageElement.style.left = left + 'px';
-            imageElement.style.top = top + 'px';
-            // Flip image horizontally based on direction
-            if (dx < 0) {
+            let left = parseInt(imageElement.style.left);
+            let top = parseInt(imageElement.style.top);
+
+            if (keys['w']) {
+                top -= moveSpeed;
+            }
+            if (keys['s']) {
+                top += moveSpeed;
+            }
+            if (keys['a']) {
+                left -= moveSpeed;
                 imageElement.style.transform = 'scaleX(1)';
-            } else if (dx > 0) {
+            }
+            if (keys['d']) {
+                left += moveSpeed;
                 imageElement.style.transform = 'scaleX(-1)';
             }
+
+            imageElement.style.left = left + 'px';
+            imageElement.style.top = top + 'px';
+
+            requestAnimationFrame(moveImage);
         }
 
-        document.addEventListener('keydown', function(event) {
-            const key = event.key.toLowerCase();
-            switch (key) {
-                case 'w':
-                    moveImage(0, -10);
-                    break;
-                case 'a':
-                    moveImage(-10, 0);
-                    break;
-                case 's':
-                    moveImage(0, 10);
-                    break;
-                case 'd':
-                    moveImage(10, 0);
-                    break;
-            }
-        });
+        moveImage();
     </script>
 
     <input id="myButton01" type="button" value="Background Move Left" onclick="moveBackgroundLeft()"><br><br>
@@ -82,6 +103,6 @@
     <input type="button" value="Auto Background Left Slower" onclick="autoBackgroundLeftSlower()"><br><br>
     <input type="button" id="myButton02" value="Image Right" onclick="moveImageRight()"><br><br>
     <input type="button" value="Auto Move Right" onclick="autoMoveRight()"><br><br>
-    <img id="myImage01" style="position:relative; width:200px; height:160px; top:0px; left:0px;" src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/7/7a/Tails_flying_sprite(1).gif/revision/latest?cb=20170901164051">
+    <img id="myImage01" src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/7/7a/Tails_flying_sprite(1).gif/revision/latest?cb=20170901164051">
 </body>
 </html>
