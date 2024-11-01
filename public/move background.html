@@ -41,8 +41,40 @@
 
         function autoMoveRight() {
             clearInterval(myClock02);
-            myClock02 = setInterval(function() { document.getElementById('myButton02').click(); }, 300);
+            myClock02 = setInterval(function() { document.getElementById('myButton02').click(); }, 30);
         }
+
+        function moveImage(dx, dy) {
+            let imageElement = document.getElementById('myImage01');
+            let left = parseInt(imageElement.style.left) + dx;
+            let top = parseInt(imageElement.style.top) + dy;
+            imageElement.style.left = left + 'px';
+            imageElement.style.top = top + 'px';
+            // Flip image horizontally based on direction
+            if (dx < 0) {
+                imageElement.style.transform = 'scaleX(1)';
+            } else if (dx > 0) {
+                imageElement.style.transform = 'scaleX(-1)';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            const key = event.key.toLowerCase();
+            switch (key) {
+                case 'w':
+                    moveImage(0, -10);
+                    break;
+                case 'a':
+                    moveImage(-10, 0);
+                    break;
+                case 's':
+                    moveImage(0, 10);
+                    break;
+                case 'd':
+                    moveImage(10, 0);
+                    break;
+            }
+        });
     </script>
 
     <input id="myButton01" type="button" value="Background Move Left" onclick="moveBackgroundLeft()"><br><br>
@@ -50,6 +82,6 @@
     <input type="button" value="Auto Background Left Slower" onclick="autoBackgroundLeftSlower()"><br><br>
     <input type="button" id="myButton02" value="Image Right" onclick="moveImageRight()"><br><br>
     <input type="button" value="Auto Move Right" onclick="autoMoveRight()"><br><br>
-    <img id="myImage01" style="position:relative; width:200px; height:160px; top:0px; left:0px; transform: scaleX(-1);" src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/7/7a/Tails_flying_sprite(1).gif/revision/latest?cb=20170901164051">
+    <img id="myImage01" style="position:relative; width:200px; height:160px; top:0px; left:0px;" src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/7/7a/Tails_flying_sprite(1).gif/revision/latest?cb=20170901164051">
 </body>
 </html>
