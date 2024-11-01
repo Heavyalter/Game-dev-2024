@@ -11,11 +11,12 @@
             background-image: url('https://external-preview.redd.it/fhkU2h_KoqELvDHZPjgjaSnD_dJjnDVj3qE0-b7Ih3g.jpg?auto=webp&s=4dfd06d8ae8ead160b7679c77209263ade1c86fb');
         }
         img {
-            position: relative;
+            position: absolute;
             width: 200px;
             height: 160px;
             top: 0;
             left: 0;
+            transition: transform 0.1s;
         }
     </style>
 </head>
@@ -71,8 +72,8 @@
 
         function moveImage() {
             let imageElement = document.getElementById('myImage01');
-            let left = parseInt(imageElement.style.left);
-            let top = parseInt(imageElement.style.top);
+            let left = parseInt(imageElement.style.left) || 0;
+            let top = parseInt(imageElement.style.top) || 0;
 
             if (keys['w']) {
                 top -= moveSpeed;
@@ -82,11 +83,11 @@
             }
             if (keys['a']) {
                 left -= moveSpeed;
-                imageElement.style.transform = 'scaleX(1)';
+                imageElement.style.transform = 'scaleX(-1)';
             }
             if (keys['d']) {
                 left += moveSpeed;
-                imageElement.style.transform = 'scaleX(-1)';
+                imageElement.style.transform = 'scaleX(1)';
             }
 
             imageElement.style.left = left + 'px';
