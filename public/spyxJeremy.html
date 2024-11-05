@@ -1,1 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t2a19-spy-fred.html</title>
+</head>
+<body>
+    <h1 align="center">t2a19-spy-fred.html</h1>
+    <textarea id="myArea01" rows="4" cols="70">Hello how are you</textarea><br>
+    <input type="button" value="Encrypt" onclick="encryptText()"><br>
+    <textarea id="myArea02" rows="4" cols="70"></textarea><br>
+    <input type="button" value="Decrypt" onclick="decryptText()"><br><br>
+    <textarea id="myArea" rows="4" cols="70"></textarea><br>
 
+    <script>
+        function encryptText() {
+            let myTemp = '';
+            let myString = document.getElementById('myArea01').value.toLowerCase().split('');
+            for (let myLoop = 0; myLoop < myString.length; myLoop++) {
+                myTemp = myString[myLoop];
+                if (myString[myLoop] == 'e') { myTemp = 'f'; }
+                if (myString[myLoop] == 'h') { myTemp = 'i'; }
+                myString[myLoop] = myTemp;
+            }
+            document.getElementById('myArea02').value = myString.join('');
+        }
+
+        function decryptText() {
+            alert('Sorry, you have to do this!');
+        }
+    </script>
+</body>
+</html>
