@@ -55,7 +55,6 @@
         <input type="button" value="Encrypt" onclick="encryptText()"><br>
         <textarea id="myArea02" rows="4" cols="70"></textarea><br>
         <input type="button" value="Decrypt" onclick="decryptText()"><br><br>
-        <textarea id="myArea" rows="4" cols="70"></textarea><br>
     </div>
 
     <script>
@@ -72,7 +71,15 @@
         }
 
         function decryptText() {
-            alert('Sorry, you have to do this!');
+            let myTemp = '';
+            let myString = document.getElementById('myArea02').value.toLowerCase().split('');
+            for (let myLoop = 0; myLoop < myString.length; myLoop++) {
+                myTemp = myString[myLoop];
+                if (myString[myLoop] === 'f') { myTemp = 'e'; }
+                if (myString[myLoop] === 'i') { myTemp = 'h'; }
+                myString[myLoop] = myTemp;
+            }
+            document.getElementById('myArea02').value = myString.join('');
         }
     </script>
 </body>
