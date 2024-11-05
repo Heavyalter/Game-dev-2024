@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-     <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t2a19-spy-fred.html</title>
+    <style>
         body {
             background-color: #121212;
             color: #ffffff;
@@ -8,25 +12,31 @@
             margin: 0;
             padding: 20px;
         }
-        h2 {
+        h1 {
             color: #bb86fc;
+            text-align: center;
         }
-        a {
-            color: #03dac6;
-            text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
+        textarea {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #03dac6;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            color: #ffffff;
         }
-        a:hover {
-            text-decoration: underline;
-            color: #bb86fc;
-            transform: scale(1.1);
+        input[type="button"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #03dac6;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
+        input[type="button"]:hover {
+            background-color: #bb86fc;
         }
         .container {
             max-width: 800px;
@@ -37,18 +47,16 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t2a19-spy-fred.html</title>
 </head>
 <body>
-    <h1 align="center">t2a19-spy-fred.html</h1>
-    <textarea id="myArea01" rows="4" cols="70">Hello how are you</textarea><br>
-    <input type="button" value="Encrypt" onclick="encryptText()"><br>
-    <textarea id="myArea02" rows="4" cols="70"></textarea><br>
-    <input type="button" value="Decrypt" onclick="decryptText()"><br><br>
-    <textarea id="myArea" rows="4" cols="70"></textarea><br>
+    <div class="container">
+        <h1>t2a19-spy-fred.html</h1>
+        <textarea id="myArea01" rows="4" cols="70">Hello how are you</textarea><br>
+        <input type="button" value="Encrypt" onclick="encryptText()"><br>
+        <textarea id="myArea02" rows="4" cols="70"></textarea><br>
+        <input type="button" value="Decrypt" onclick="decryptText()"><br><br>
+        <textarea id="myArea" rows="4" cols="70"></textarea><br>
+    </div>
 
     <script>
         function encryptText() {
@@ -56,8 +64,8 @@
             let myString = document.getElementById('myArea01').value.toLowerCase().split('');
             for (let myLoop = 0; myLoop < myString.length; myLoop++) {
                 myTemp = myString[myLoop];
-                if (myString[myLoop] == 'e') { myTemp = 'f'; }
-                if (myString[myLoop] == 'h') { myTemp = 'i'; }
+                if (myString[myLoop] === 'e') { myTemp = 'f'; }
+                if (myString[myLoop] === 'h') { myTemp = 'i'; }
                 myString[myLoop] = myTemp;
             }
             document.getElementById('myArea02').value = myString.join('');
