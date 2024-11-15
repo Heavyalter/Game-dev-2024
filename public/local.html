@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t2a22-local-storage-fred.html</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #87CEEB;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #bb86fc;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #03dac6;
+            margin-bottom: 10px;
+            background-color: #2c2c2c;
+            color: #87CEEB;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            background-color: #03dac6;
+            color: #121212;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        input[type="button"]:hover {
+            background-color: #bb86fc;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body onload="loadStoredText()">
+    <div class="container">
+        <h2>t2a22-local-storage-fred.html</h2>
+        <label for="myText1">Text example:</label>
+        <input id="myText1" type="text" size="70" value="" placeholder="Write here to store"><br>
+        <input type="button" value="Store Text" onclick="storeText()">
+        <input type="button" value="Retrieve Text" onclick="retrieveText()">
+    </div>
+
+    <script>
+        function loadStoredText() {
+            let myStorage = localStorage.getItem('myStoredText');
+            if (myStorage != null) {
+                document.getElementById('myText1').value = myStorage;
+            }
+        }
+
+        function storeText() {
+            let text = document.getElementById('myText1').value;
+            localStorage.setItem('myStoredText', text);
+            alert(text + ' has been stored');
+            document.getElementById('myText1').value = '';
+        }
+
+        function retrieveText() {
+            document.getElementById('myText1').value = localStorage.getItem('myStoredText');
+        }
+    </script>
+</body>
+</html>
 
