@@ -22,42 +22,45 @@ let myTimer01;
 let myTimer02;
 
 // Global functions here
-function myHitOther(my1,my2){
-  left1   = parseInt(document.getElementById(my1).style.left);
-  right1  = left1 + parseInt(document.getElementById(my1).style.width);
-  top1    = parseInt(document.getElementById(my1).style.top);   
-  bottom1 = top1   + parseInt(document.getElementById(my1).style.height);
-  left2   = parseInt(document.getElementById(my2).style.left);
-  right2  = left2 + parseInt(document.getElementById(my2).style.width);
-  top2    = parseInt(document.getElementById(my2).style.top);   
-  bottom2 = top2   + parseInt(document.getElementById(my2).style.height);
-  
-  if ((right1  >=  left2) && (bottom1 >= top2) &&
-      (left1   <=  right2) && (top1    <=  bottom2)){
+function myHitOther(my1, my2) {
+  left1 = parseInt(document.getElementById(my1).style.left);
+  right1 = left1 + parseInt(document.getElementById(my1).style.width);
+  top1 = parseInt(document.getElementById(my1).style.top);
+  bottom1 = top1 + parseInt(document.getElementById(my1).style.height);
+  left2 = parseInt(document.getElementById(my2).style.left);
+  right2 = left2 + parseInt(document.getElementById(my2).style.width);
+  top2 = parseInt(document.getElementById(my2).style.top);
+  bottom2 = top2 + parseInt(document.getElementById(my2).style.height);
+
+  if ((right1 >= left2) && (bottom1 >= top2) && (left1 <= right2) && (top1 <= bottom2)) {
     return true;
   }
   return false;
 }
 
-function myCheckHit(){
-  if ( myHitOther('myImg01','myImg02') ){
+function myCheckHit() {
+  if (myHitOther('myImg01', 'myImg02')) {
+    // Reset the player's position if they collide with the enemy
     document.getElementById('myImg01').style.left = '20px';
-  }   
-  if ( myHitOther('myImg01','myImg03') ){
-    document.getElementById('myImg01').style.left = '20px';
-  }   
-  if ( myHitOther('myImg01','myImg04') ){
-    alert('You Win, now go to the next level');
-    document.getElementById('myImg01').style.left = '20px';
-    location = 'https://www.google.ca';
+    document.getElementById('myImg01').style.top = '190px';
+    alert('You collided with the enemy! Game reset.');
   }
 
-  // Checking for window boundaries
-  if(parseInt(document.getElementById('myImg01').style.left) > window.innerWidth - document.getElementById('myImg01').width ){
+  // Check if the player has passed the enemy
+  let playerLeft = parseInt(document.getElementById('myImg01').style.left);
+  let enemyRight = parseInt(document.getElementById('myImg02').style.left) + 100; // 100 is the width of myImg02
+  if (playerLeft > enemyRight) {
+    alert('You passed the enemy! You win!');
+    document.getElementById('myImg01').style.left = '20px';
+    document.getElementById('myImg01').style.top = '190px';
+  }
+
+  // Check for window boundaries for player and enemy
+  if (parseInt(document.getElementById('myImg01').style.left) > window.innerWidth - document.getElementById('myImg01').width) {
     document.getElementById('myImg01').style.left = '10px';
   }
 
-  if(parseInt(document.getElementById('myImg02').style.left) > window.innerWidth - document.getElementById('myImg02').width ){
+  if (parseInt(document.getElementById('myImg02').style.left) > window.innerWidth - document.getElementById('myImg02').width) {
     document.getElementById('myImg02').style.left = (window.innerWidth / 2) + 'px';
   }
 }
@@ -71,13 +74,13 @@ function moveWithWASD(event) {
 
   // Move the character based on the key pressed
   if (myKey == 'w' || myKey == 'W') {
-    character.style.top = (top - 10) + 'px';  // Move up
+    character.style.top = (top - 10) + 'px'; // Move up
   } else if (myKey == 'a' || myKey == 'A') {
-    character.style.left = (left - 10) + 'px';  // Move left
+    character.style.left = (left - 10) + 'px'; // Move left
   } else if (myKey == 's' || myKey == 'S') {
-    character.style.top = (top + 10) + 'px';  // Move down
+    character.style.top = (top + 10) + 'px'; // Move down
   } else if (myKey == 'd' || myKey == 'D') {
-    character.style.left = (left + 10) + 'px';  // Move right
+    character.style.left = (left + 10) + 'px'; // Move right
   }
 
   // Update the key pressed info on the screen
@@ -86,6 +89,36 @@ function moveWithWASD(event) {
   // Check for collisions after movement
   myCheckHit();
 }
+
+// Move enemy slowly towards the player
+function moveEnemyTowardsPlayer() {
+  let enemy = document.getElementById('myImg02');
+  let player = document.getElementById('myImg01');
+
+  let enemyLeft = parseInt(enemy.style.left);
+  let playerLeft = parseInt(player.style.left);
+  let enemyTop = parseInt(enemy.style.top);
+  let playerTop = parseInt(player.style.top);
+
+  // Move the enemy towards the player
+  if (enemyLeft < playerLeft) {
+    enemy.style.left = (enemyLeft + 1) + 'px'; // Move enemy right towards player
+  } else if (enemyLeft > playerLeft) {
+    enemy.style.left = (enemyLeft - 1) + 'px'; // Move enemy left towards player
+  }
+
+  if (enemyTop < playerTop) {
+    enemy.style.top = (enemyTop + 1) + 'px'; // Move enemy down towards player
+  } else if (enemyTop > playerTop) {
+    enemy.style.top = (enemyTop - 1) + 'px'; // Move enemy up towards player
+  }
+
+  // Check for collisions after enemy movement
+  myCheckHit();
+}
+
+// Start the enemy movement when the page loads
+setInterval(moveEnemyTowardsPlayer, 10);
 
 // Simple inline keydown event handlers for WASD
 window.onkeydown = moveWithWASD;
@@ -123,8 +156,8 @@ window.onkeydown = moveWithWASD;
 
 <!-- Images -->
 <img id="myImg01" src="myImgNew.jpg" title="myImg01" style="position:absolute; width:100px; height:80px; left: 50px; top:190px;">
-<img id="myImg02" src="myImgNew.jpg" title="myImg02" style="position:absolute; width:100px;  height:80px; left:350px; top:190px;">
-<img id="myImg03" src="myImgNew.jpg" title="myImg03" style="position:absolute; width:100px; height:80px;  left:500px; top:190px;">
+<img id="myImg02" src="myImgNew.jpg" title="myImg02" style="position:absolute; width:100px; height:80px; left:350px; top:190px;">
+<img id="myImg03" src="myImgNew.jpg" title="myImg03" style="position:absolute; width:100px; height:80px; left:500px; top:190px;">
 <img id="myImg04" src="myImgNew.jpg" title="myImg04" style="position:absolute; width:100px; height:80px; left:500px; top:400px;">
 
 </body>
