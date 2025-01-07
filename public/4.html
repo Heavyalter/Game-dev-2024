@@ -11,7 +11,11 @@
 
 <h1 align=center><font color=red>T4A08 Random Move by Fred</font></h1>
 
+<!-- Show key press -->
+<div id="myDiv01" style="font-size: 20px; color: red;">Press WASD to move</div>
+
 <script>
+
 // Global variables here
 let myGlobalX = 0
 let myClock
@@ -59,50 +63,42 @@ function myCheckHit(){
    }
 }
 
+// Function to handle WASD movement
+function moveCharacter(event) {
+  let myKey = event.key;
+  let character = document.getElementById('myImg01');
+
+  let left = parseInt(character.style.left || 0);
+  let top = parseInt(character.style.top || 0);
+
+  // Handle WASD movement
+  if (myKey == 'w' || myKey == 'W') {
+    // Move up
+    character.style.top = (top - 10) + 'px';
+  } else if (myKey == 'a' || myKey == 'A') {
+    // Move left
+    character.style.left = (left - 10) + 'px';
+  } else if (myKey == 's' || myKey == 'S') {
+    // Move down
+    character.style.top = (top + 10) + 'px';
+  } else if (myKey == 'd' || myKey == 'D') {
+    // Move right
+    character.style.left = (left + 10) + 'px';
+  }
+
+  // Update key pressed in div
+  document.getElementById('myDiv01').innerHTML = 'You pressed: ' + myKey;
+
+  myCheckHit(); // Check for collisions
+}
+
+// Event listener for keydown event
+document.body.addEventListener('keydown', moveCharacter);
+
 </script>
 
 <!-- Buttons to move background -->
-
-<body id="myBody" onkeydown="moveCharacter(event)" style="background-image: url('https://external-preview.redd.it/fhkU2h_KoqELvDHZPjgjaSnD_dJjnDVj3qE0-b7Ih3g.jpg?auto=webp&s=4dfd06d8ae8ead160b7679c77209263ade1c86fb'); background-repeat: repeat; background-size: 80%;">
-  <h1 align=center><font color=red>T4A08 Random Move by Fred</font></h1>
-
-  <div id="myDiv01" style="font-size: 20px; color: red;">Press WASD to move</div>
-
-  <script>
-    // This function will handle the movement based on key press
-    function moveCharacter(event) {
-      let myKey = event.key;
-      let character = document.getElementById('myImg01');
-
-      let left = parseInt(character.style.left || 0);
-      let top = parseInt(character.style.top || 0);
-
-      // Handle WASD movement
-      if (myKey == 'w' || myKey == 'W') {
-        // Move up
-        character.style.top = (top - 10) + 'px';
-      } else if (myKey == 'a' || myKey == 'A') {
-        // Move left
-        character.style.left = (left - 10) + 'px';
-      } else if (myKey == 's' || myKey == 'S') {
-        // Move down
-        character.style.top = (top + 10) + 'px';
-      } else if (myKey == 'd' || myKey == 'D') {
-        // Move right
-        character.style.left = (left + 10) + 'px';
-      }
-
-      // Update key pressed in div
-      document.getElementById('myDiv01').innerHTML = 'You pressed: ' + myKey;
-    }
-  </script>
-
-  <!-- Character image to be moved -->
-  <img id="myImg01" src="myImgNew.jpg" title="myImg01" style="position:absolute; width:100px; height:80px; left: 50px; top:190px;">
-</body>
-
-  
-  <input type=button value="Auto Background Left" onclick="{
+<input type=button value="Auto Background Left" onclick="{
   clearInterval(myClock)
   let myTemp = '100px 0px'
   myClock = setInterval(function(){
@@ -135,3 +131,4 @@ function myCheckHit(){
 <img id="myImg02" src="myImgNew.jpg" title="myImg02" style="position:absolute; width:100px;  height:80px; left:350px; top:190px;">
 <img id="myImg03" src="myImgNew.jpg" title="myImg03" style="position:absolute; width:100px; height:80px;  left:500px; top:190px;">
 <img id="myImg04" src="myImgNew.jpg" title="myImg04" style="position:absolute; width:100px; height:80px; left:500px; top:400px;">
+</body>
