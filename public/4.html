@@ -1,7 +1,4 @@
-
-
 <body id="myBody" onLoad="{
-
   clearInterval(myTimer02)
   myTimer02 = setInterval(function(){
      let my02x = Math.floor((Math.random() * 20) - 9) 
@@ -10,23 +7,18 @@
      document.getElementById('myImg02').style.top  = parseInt(document.getElementById('myImg02').style.top)  + my02y + 'px'
      myCheckHit()     // checks for all collisions
   }, 50)
-
-
 }" style="background-repeat:repeat; background-size: 80%" background="https://external-preview.redd.it/fhkU2h_KoqELvDHZPjgjaSnD_dJjnDVj3qE0-b7Ih3g.jpg?auto=webp&s=4dfd06d8ae8ead160b7679c77209263ade1c86fb">
 
 <h1 align=center><font color=red>T4A08 Random Move by Fred</font></h1>
 
-
 <script>
+// Global variables here
+let myGlobalX = 0
+let myClock
+let myTimer01
+let myTimer02
 
-   // global variables here
-   let myGlobalX = 0
-   let myClock
-   let myTimer01
-   let myTimer02
-
-
-   // global functions here
+// Global functions here
 function myHitOther(my1,my2){
    left1   = parseInt(document.getElementById(my1).style.left)
    right1  = left1 + parseInt(document.getElementById(my1).style.width)
@@ -44,50 +36,32 @@ function myHitOther(my1,my2){
    }
 }
 
-
 function myCheckHit(){
-
    if ( myHitOther('myImg01','myImg02') ){
-       //alert('you lose')
       document.getElementById('myImg01').style.left = '20px'
    }   
-   
    if ( myHitOther('myImg01','myImg03') ){
-       //alert('you lose')
       document.getElementById('myImg01').style.left = '20px'
    }   
-   
-
-
-   // YOU WIN and go to next level!
    if ( myHitOther('myImg01','myImg04') ){
-       alert('You Win, now go to the next level')
+      alert('You Win, now go to the next level')
       document.getElementById('myImg01').style.left = '20px'
       location = 'https://www.google.ca'
    }
 
-   // more if statements here
-
-
-   // checking for window boundaries
-
-  if( parseInt(document.getElementById('myImg01').style.left) > window.innerWidth - document.getElementById('myImg01').width ){
+   // Checking for window boundaries
+   if( parseInt(document.getElementById('myImg01').style.left) > window.innerWidth - document.getElementById('myImg01').width ){
        document.getElementById('myImg01').style.left = '10px'
    }
 
-  if( parseInt(document.getElementById('myImg02').style.left) > window.innerWidth - document.getElementById('myImg02').width ){
+   if( parseInt(document.getElementById('myImg02').style.left) > window.innerWidth - document.getElementById('myImg02').width ){
        document.getElementById('myImg02').style.left = (window.innerWidth / 2) + 'px'
    }
-
-
 }
-
 
 </script>
 
-
-
-
+<!-- Buttons to move background -->
 <input type=button value="Auto Background Left" onclick="{
   clearInterval(myClock)
   let myTemp = '100px 0px'
@@ -96,36 +70,28 @@ function myCheckHit(){
       myTemp =  myGlobalX + 'px 0px'
       document.getElementById('myBody').style.backgroundPosition = myTemp
   }, 100)
-    
 }">
-
 
 <input type=button value="Right" onTouchStart="{this.click(); event.preventDefault();}" onclick="{
   document.getElementById('myImg01').style.left = parseInt(document.getElementById('myImg01').style.left) + 10 + 'px'
-  myCheckHit()     // checks for all collisions
+  myCheckHit()
 }">
 
 <input type=button value="Down" onTouchStart="{this.click(); event.preventDefault();}" onclick="{
   document.getElementById('myImg01').style.top = parseInt(document.getElementById('myImg01').style.top) + 10 + 'px'
-  myCheckHit()     // checks for all collisions
+  myCheckHit()
 }">
 
-
-
 <input type=button value="Auto Right" onTouchStart="{this.click(); event.preventDefault();}" onclick="{
-
   clearInterval(myTimer01)
   myTimer01 = setInterval(function(){
      document.getElementById('myImg01').style.left = parseInt(document.getElementById('myImg01').style.left) + 10 + 'px'
-     myCheckHit()     // checks for all collisions
+     myCheckHit()
   }, 50)
-
-
 }"><br><br>
 
-
+<!-- Images -->
 <img id="myImg01" src="myImgNew.jpg" title="myImg01" style="position:absolute; width:100px; height:80px; left: 50px; top:190px;">
 <img id="myImg02" src="myImgNew.jpg" title="myImg02" style="position:absolute; width:100px;  height:80px; left:350px; top:190px;">
 <img id="myImg03" src="myImgNew.jpg" title="myImg03" style="position:absolute; width:100px; height:80px;  left:500px; top:190px;">
 <img id="myImg04" src="myImgNew.jpg" title="myImg04" style="position:absolute; width:100px; height:80px; left:500px; top:400px;">
-
