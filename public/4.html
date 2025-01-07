@@ -40,9 +40,11 @@ function myHitOther(my1, my2) {
 
 function myCheckHit() {
   if (myHitOther('myImg01', 'myImg02')) {
-    // Reset the player's position if they collide with the enemy
+    // Reset the player's position and the enemy's position if they collide
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
+    document.getElementById('myImg02').style.left = '350px'; // Reset enemy's position
+    document.getElementById('myImg02').style.top = '190px'; // Reset enemy's position
     alert('You collided with the enemy! Game reset.');
   }
 
