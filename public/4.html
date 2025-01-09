@@ -49,11 +49,11 @@ function myCheckHit() {
     resetKeys();
   }
 
-  // Check if the player has passed the enemies
+  // Check if the player has passed the right edge of the screen
   let playerLeft = parseInt(document.getElementById('myImg01').style.left);
-  let enemyRight = parseInt(document.getElementById('myImg02').style.left) + enemyWidth; // 100 is the width of myImg02
-  if (playerLeft > enemyRight) {
-    alert('You passed the enemy! You win!');
+  let screenWidth = window.innerWidth;
+  if (playerLeft > screenWidth - document.getElementById('myImg01').width) {
+    alert('You reached the right edge! You win!');
     
     // Reset the player's position
     document.getElementById('myImg01').style.left = '20px';
@@ -101,20 +101,17 @@ function moveEnemyTowardsPlayer(enemyId) {
   let enemyTop = parseInt(enemy.style.top);
   let playerTop = parseInt(player.style.top);
 
-  // Move the enemy towards the player with small random variations for randomness
-  let moveX = Math.random() * 2 - 1;  // Small random movement (-1 to 1)
-  let moveY = Math.random() * 2 - 1;  // Small random movement (-1 to 1)
-
+  // Move the enemy towards the player
   if (enemyLeft < playerLeft) {
-    enemy.style.left = (enemyLeft + moveX) + 'px';
+    enemy.style.left = (enemyLeft + 0.5) + 'px';  // Enemy moves slowly towards the player
   } else if (enemyLeft > playerLeft) {
-    enemy.style.left = (enemyLeft - moveX) + 'px';
+    enemy.style.left = (enemyLeft - 0.5) + 'px';  // Enemy moves slowly towards the player
   }
 
   if (enemyTop < playerTop) {
-    enemy.style.top = (enemyTop + moveY) + 'px';
+    enemy.style.top = (enemyTop + 0.5) + 'px';  // Enemy moves slowly towards the player
   } else if (enemyTop > playerTop) {
-    enemy.style.top = (enemyTop - moveY) + 'px';
+    enemy.style.top = (enemyTop - 0.5) + 'px';  // Enemy moves slowly towards the player
   }
 
   // Check for collisions after enemy movement
