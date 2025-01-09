@@ -16,12 +16,7 @@
 
 <script>
 // Global variables here
-let myGlobalX = 0;
-let myClock;
-let myTimer01;
 let myTimer02;
-
-// Track held keys
 let keysHeld = { w: false, a: false, s: false, d: false };
 
 // Global functions here
@@ -119,18 +114,19 @@ function moveEnemyTowardsPlayer() {
 // Start the enemy movement when the page loads
 setInterval(moveEnemyTowardsPlayer, 10);
 
-// Handle keydown and keyup for continuous movement
-window.addEventListener('keydown', function(event) {
+// Handle keydown for continuous movement
+window.onkeydown = function(event) {
   if (['w', 'a', 's', 'd'].includes(event.key.toLowerCase())) {
     keysHeld[event.key.toLowerCase()] = true;
   }
-});
+};
 
-window.addEventListener('keyup', function(event) {
+// Handle keyup to stop movement
+window.onkeyup = function(event) {
   if (['w', 'a', 's', 'd'].includes(event.key.toLowerCase())) {
     keysHeld[event.key.toLowerCase()] = false;
   }
-});
+};
 
 // Continuously update movement
 setInterval(moveWithWASD, 10);
