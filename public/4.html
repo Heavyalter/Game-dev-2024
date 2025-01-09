@@ -38,22 +38,11 @@ function myHitOther(my1, my2) {
 }
 
 function myCheckHit() {
-  if (myHitOther('myImg01', 'myImg02')) {
-    // Reset the player's position and the enemy's position if they collide
-    document.getElementById('myImg01').style.left = '20px';
-    document.getElementById('myImg01').style.top = '190px';
-    resetEnemy(); // Reset enemy to the right edge
-    alert('You collided with the enemy! Game reset.');
-
-    // Reset the keys held state after collision
-    resetKeys();
-  }
-
-  // Check if the player has passed the enemy
+  // Check if the player has reached the right edge of the screen
   let playerLeft = parseInt(document.getElementById('myImg01').style.left);
-  let enemyRight = parseInt(document.getElementById('myImg02').style.left) + enemyWidth; // 100 is the width of myImg02
-  if (playerLeft > enemyRight) {
-    alert('You passed the enemy! You win!');
+  let playerRight = playerLeft + document.getElementById('myImg01').width;
+  if (playerRight >= window.innerWidth) {
+    alert('You reached the right edge! You win!');
     
     // Reset the player's position
     document.getElementById('myImg01').style.left = '20px';
@@ -66,10 +55,10 @@ function myCheckHit() {
     resetKeys();
   }
 
-  // Check for window boundaries for player and enemy
-  if (parseInt(document.getElementById('myImg01').style.left) > window.innerWidth - document.getElementById('myImg01').width) {
-    document.getElementById('myImg01').style.left = '10px';
-  }
+  // Other checks like collision with enemy can be removed if only the right edge matters
+  // if (myHitOther('myImg01', 'myImg02')) {
+  //   ...
+  // }
 }
 
 // Movement with WASD keys
