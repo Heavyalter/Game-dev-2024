@@ -21,6 +21,9 @@ let myClock;
 let myTimer01;
 let myTimer02;
 
+// Track held keys
+let keysHeld = { w: false, a: false, s: false, d: false };
+
 // Global functions here
 function myHitOther(my1, my2) {
   left1 = parseInt(document.getElementById(my1).style.left);
@@ -68,25 +71,19 @@ function myCheckHit() {
 }
 
 // Movement with WASD keys
-function moveWithWASD(event) {
-  let myKey = event.key;
+function moveWithWASD() {
   let character = document.getElementById('myImg01');
   let left = parseInt(character.style.left || '0');
   let top = parseInt(character.style.top || '0');
 
-  // Move the character based on the key pressed
-  if (myKey == 'w' || myKey == 'W') {
-    character.style.top = (top - 5) + 'px'; // Smooth move up
-  } else if (myKey == 'a' || myKey == 'A') {
-    character.style.left = (left - 5) + 'px'; // Smooth move left
-  } else if (myKey == 's' || myKey == 'S') {
-    character.style.top = (top + 5) + 'px'; // Smooth move down
-  } else if (myKey == 'd' || myKey == 'D') {
-    character.style.left = (left + 5) + 'px'; // Smooth move right
-  }
+  // Move the character based on the held keys
+  if (keysHeld['w']) character.style.top = (top - 5) + 'px'; // Move up
+  if (keysHeld['a']) character.style.left = (left - 5) + 'px'; // Move left
+  if (keysHeld['s']) character.style.top = (top + 5) + 'px'; // Move down
+  if (keysHeld['d']) character.style.left = (left + 5) + 'px'; // Move right
 
   // Update the key pressed info on the screen
-  document.getElementById('myDiv01').innerHTML = 'You pressed: ' + myKey;
+  document.getElementById('myDiv01').innerHTML = 'You pressed: ' + Object.keys(keysHeld).filter(key => keysHeld[key]).join(', ');
 
   // Check for collisions after movement
   myCheckHit();
@@ -122,8 +119,21 @@ function moveEnemyTowardsPlayer() {
 // Start the enemy movement when the page loads
 setInterval(moveEnemyTowardsPlayer, 10);
 
-// Simple inline keydown event handlers for WASD
-window.onkeydown = moveWithWASD;
+// Handle keydown and keyup for continuous movement
+window.addEventListener('keydown', function(event) {
+  if (['w', 'a', 's', 'd'].includes(event.key.toLowerCase())) {
+    keysHeld[event.key.toLowerCase()] = true;
+  }
+});
+
+window.addEventListener('keyup', function(event) {
+  if (['w', 'a', 's', 'd'].includes(event.key.toLowerCase())) {
+    keysHeld[event.key.toLowerCase()] = false;
+  }
+});
+
+// Continuously update movement
+setInterval(moveWithWASD, 10);
 </script>
 
 <!-- Images -->
