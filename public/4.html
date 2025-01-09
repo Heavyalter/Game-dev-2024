@@ -18,6 +18,7 @@
 // Global variables here
 let myTimer02;
 let keysHeld = { w: false, a: false, s: false, d: false };
+const enemyWidth = 100;  // Assuming enemy's width is 100px
 
 // Global functions here
 function myHitOther(my1, my2) {
@@ -41,8 +42,7 @@ function myCheckHit() {
     // Reset the player's position and the enemy's position if they collide
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
-    document.getElementById('myImg02').style.left = '350px'; // Reset enemy's position
-    document.getElementById('myImg02').style.top = '190px'; // Reset enemy's position
+    resetEnemy(); // Reset enemy to the right edge
     alert('You collided with the enemy! Game reset.');
 
     // Reset the keys held state after collision
@@ -51,7 +51,7 @@ function myCheckHit() {
 
   // Check if the player has passed the enemy
   let playerLeft = parseInt(document.getElementById('myImg01').style.left);
-  let enemyRight = parseInt(document.getElementById('myImg02').style.left) + 100; // 100 is the width of myImg02
+  let enemyRight = parseInt(document.getElementById('myImg02').style.left) + enemyWidth; // 100 is the width of myImg02
   if (playerLeft > enemyRight) {
     alert('You passed the enemy! You win!');
     
@@ -59,7 +59,7 @@ function myCheckHit() {
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
 
-    // Reset the enemy's position to the opposite end
+    // Reset the enemy's position to the right edge
     resetEnemy();
 
     // Reset the keys held state after winning
@@ -69,10 +69,6 @@ function myCheckHit() {
   // Check for window boundaries for player and enemy
   if (parseInt(document.getElementById('myImg01').style.left) > window.innerWidth - document.getElementById('myImg01').width) {
     document.getElementById('myImg01').style.left = '10px';
-  }
-
-  if (parseInt(document.getElementById('myImg02').style.left) > window.innerWidth - document.getElementById('myImg02').width) {
-    document.getElementById('myImg02').style.left = (window.innerWidth / 2) + 'px';
   }
 }
 
@@ -145,16 +141,11 @@ function resetKeys() {
   document.getElementById('myDiv01').innerHTML = 'You pressed: ';
 }
 
-// Function to reset the enemy's position to the opposite side
+// Function to reset the enemy's position to the right edge
 function resetEnemy() {
-  let enemy = document.getElementById('myImg02');
-  if (parseInt(enemy.style.left) < window.innerWidth / 2) {
-    // If the enemy is on the left side, move it to the right side
-    enemy.style.left = window.innerWidth - enemy.width + 'px';
-  } else {
-    // If the enemy is on the right side, move it to the left side
-    enemy.style.left = '0px';
-  }
+  const screenWidth = window.innerWidth;
+  document.getElementById('myImg02').style.left = (screenWidth - enemyWidth) + 'px';  // Always place the enemy at the right edge
+  document.getElementById('myImg02').style.top = '190px'; // Optionally, reset enemy vertical position
 }
 
 // Continuously update movement
