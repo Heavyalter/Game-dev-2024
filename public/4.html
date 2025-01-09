@@ -55,10 +55,20 @@ function myCheckHit() {
     resetKeys();
   }
 
-  // Other checks like collision with enemy can be removed if only the right edge matters
-  // if (myHitOther('myImg01', 'myImg02')) {
-  //   ...
-  // }
+  // Check if the player has collided with the enemy (Game Over)
+  if (myHitOther('myImg01', 'myImg02')) {
+    alert('You collided with the enemy! Game Over!');
+    
+    // Reset the player's position
+    document.getElementById('myImg01').style.left = '20px';
+    document.getElementById('myImg01').style.top = '190px';
+
+    // Reset the enemy's position to the right edge
+    resetEnemy();
+
+    // Reset the keys held state after losing
+    resetKeys();
+  }
 }
 
 // Movement with WASD keys
