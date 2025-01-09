@@ -101,17 +101,17 @@ function moveEnemyTowardsPlayer(enemyId) {
   let enemyTop = parseInt(enemy.style.top);
   let playerTop = parseInt(player.style.top);
 
-  // Move the enemy towards the player
+  // Move the enemy towards the player on both X and Y axis
   if (enemyLeft < playerLeft) {
-    enemy.style.left = (enemyLeft + 0.5) + 'px';  // Enemy moves slowly towards the player
+    enemy.style.left = (enemyLeft + 0.5) + 'px';  // Move enemy slowly towards the player
   } else if (enemyLeft > playerLeft) {
-    enemy.style.left = (enemyLeft - 0.5) + 'px';  // Enemy moves slowly towards the player
+    enemy.style.left = (enemyLeft - 0.5) + 'px';  // Move enemy slowly towards the player
   }
 
   if (enemyTop < playerTop) {
-    enemy.style.top = (enemyTop + 0.5) + 'px';  // Enemy moves slowly towards the player
+    enemy.style.top = (enemyTop + 0.5) + 'px';  // Move enemy slowly towards the player
   } else if (enemyTop > playerTop) {
-    enemy.style.top = (enemyTop - 0.5) + 'px';  // Enemy moves slowly towards the player
+    enemy.style.top = (enemyTop - 0.5) + 'px';  // Move enemy slowly towards the player
   }
 
   // Check for collisions after enemy movement
