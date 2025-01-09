@@ -44,6 +44,9 @@ function myCheckHit() {
     document.getElementById('myImg02').style.left = '350px'; // Reset enemy's position
     document.getElementById('myImg02').style.top = '190px'; // Reset enemy's position
     alert('You collided with the enemy! Game reset.');
+
+    // Reset the keys held state after collision
+    resetKeys();
   }
 
   // Check if the player has passed the enemy
@@ -53,6 +56,9 @@ function myCheckHit() {
     alert('You passed the enemy! You win!');
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
+    
+    // Reset the keys held state after winning
+    resetKeys();
   }
 
   // Check for window boundaries for player and enemy
@@ -127,6 +133,12 @@ window.onkeyup = function(event) {
     keysHeld[event.key.toLowerCase()] = false;
   }
 };
+
+// Function to reset the key held state
+function resetKeys() {
+  keysHeld = { w: false, a: false, s: false, d: false };
+  document.getElementById('myDiv01').innerHTML = 'You pressed: ';
+}
 
 // Continuously update movement
 setInterval(moveWithWASD, 10);
