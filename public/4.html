@@ -22,14 +22,14 @@ const enemyWidth = 100;  // Assuming enemy's width is 100px
 
 // Global functions here
 function myHitOther(my1, my2) {
-  let left1 = parseInt(document.getElementById(my1).style.left);
-  let right1 = left1 + parseInt(document.getElementById(my1).style.width);
-  let top1 = parseInt(document.getElementById(my1).style.top);
-  let bottom1 = top1 + parseInt(document.getElementById(my1).style.height);
-  let left2 = parseInt(document.getElementById(my2).style.left);
-  let right2 = left2 + parseInt(document.getElementById(my2).style.width);
-  let top2 = parseInt(document.getElementById(my2).style.top);
-  let bottom2 = top2 + parseInt(document.getElementById(my2).style.height);
+  left1 = parseInt(document.getElementById(my1).style.left);
+  right1 = left1 + parseInt(document.getElementById(my1).style.width);
+  top1 = parseInt(document.getElementById(my1).style.top);
+  bottom1 = top1 + parseInt(document.getElementById(my1).style.height);
+  left2 = parseInt(document.getElementById(my2).style.left);
+  right2 = left2 + parseInt(document.getElementById(my2).style.width);
+  top2 = parseInt(document.getElementById(my2).style.top);
+  bottom2 = top2 + parseInt(document.getElementById(my2).style.height);
 
   if ((right1 >= left2) && (bottom1 >= top2) && (left1 <= right2) && (top1 <= bottom2)) {
     return true;
@@ -38,29 +38,29 @@ function myHitOther(my1, my2) {
 }
 
 function myCheckHit() {
-  if (myHitOther('myImg01', 'myImg02') || myHitOther('myImg01', 'myImg03') || myHitOther('myImg01', 'myImg04')) {
+  if (myHitOther('myImg01', 'myImg02')) {
     // Reset the player's position and the enemy's position if they collide
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
-    resetEnemies(); // Reset enemies to the right edge
-    alert('You collided with an enemy! Game reset.');
+    resetEnemy(); // Reset enemy to the right edge
+    alert('You collided with the enemy! Game reset.');
 
     // Reset the keys held state after collision
     resetKeys();
   }
 
-  // Check if the player has passed the right edge of the screen
+  // Check if the player has passed the enemy
   let playerLeft = parseInt(document.getElementById('myImg01').style.left);
-  let screenWidth = window.innerWidth;
-  if (playerLeft > screenWidth - document.getElementById('myImg01').width) {
-    alert('You reached the right edge! You win!');
+  let enemyRight = parseInt(document.getElementById('myImg02').style.left) + enemyWidth; // 100 is the width of myImg02
+  if (playerLeft > enemyRight) {
+    alert('You passed the enemy! You win!');
     
     // Reset the player's position
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
 
-    // Reset the enemies' positions to the right edge
-    resetEnemies();
+    // Reset the enemy's position to the right edge
+    resetEnemy();
 
     // Reset the keys held state after winning
     resetKeys();
@@ -91,9 +91,9 @@ function moveWithWASD() {
   myCheckHit();
 }
 
-// Move enemy towards the player (generalized for all enemies)
-function moveEnemyTowardsPlayer(enemyId) {
-  let enemy = document.getElementById(enemyId);
+// Move enemy slowly towards the player
+function moveEnemyTowardsPlayer() {
+  let enemy = document.getElementById('myImg02');
   let player = document.getElementById('myImg01');
 
   let enemyLeft = parseInt(enemy.style.left);
@@ -101,20 +101,17 @@ function moveEnemyTowardsPlayer(enemyId) {
   let enemyTop = parseInt(enemy.style.top);
   let playerTop = parseInt(player.style.top);
 
-  let diffX = playerLeft - enemyLeft;
-  let diffY = playerTop - enemyTop;
+  // Move the enemy towards the player
+  if (enemyLeft < playerLeft) {
+    enemy.style.left = (enemyLeft + 1) + 'px'; // Smooth move right towards player
+  } else if (enemyLeft > playerLeft) {
+    enemy.style.left = (enemyLeft - 1) + 'px'; // Smooth move left towards player
+  }
 
-  // Normalize the direction of movement so they move toward the player at a constant speed
-  let distance = Math.sqrt(diffX * diffX + diffY * diffY);
-  let moveSpeed = 0.5; // Set the speed of enemy movement
-
-  if (distance !== 0) {
-    let moveX = (diffX / distance) * moveSpeed;
-    let moveY = (diffY / distance) * moveSpeed;
-
-    // Update the position of the enemy towards the player
-    enemy.style.left = (enemyLeft + moveX) + 'px';
-    enemy.style.top = (enemyTop + moveY) + 'px';
+  if (enemyTop < playerTop) {
+    enemy.style.top = (enemyTop + 1) + 'px'; // Smooth move down towards player
+  } else if (enemyTop > playerTop) {
+    enemy.style.top = (enemyTop - 1) + 'px'; // Smooth move up towards player
   }
 
   // Check for collisions after enemy movement
@@ -122,11 +119,7 @@ function moveEnemyTowardsPlayer(enemyId) {
 }
 
 // Start the enemy movement when the page loads
-setInterval(function() {
-  moveEnemyTowardsPlayer('myImg02');
-  moveEnemyTowardsPlayer('myImg03');
-  moveEnemyTowardsPlayer('myImg04');
-}, 10);
+setInterval(moveEnemyTowardsPlayer, 10);
 
 // Handle keydown for continuous movement
 window.onkeydown = function(event) {
@@ -148,18 +141,11 @@ function resetKeys() {
   document.getElementById('myDiv01').innerHTML = 'You pressed: ';
 }
 
-// Function to reset all enemies' positions to the right edge
-function resetEnemies() {
+// Function to reset the enemy's position to the right edge
+function resetEnemy() {
   const screenWidth = window.innerWidth;
-  // Reset each enemy to spawn at the right edge
-  document.getElementById('myImg02').style.left = (screenWidth - enemyWidth) + 'px';  
-  document.getElementById('myImg02').style.top = '190px'; 
-
-  document.getElementById('myImg03').style.left = (screenWidth - enemyWidth) + 'px';  
-  document.getElementById('myImg03').style.top = '290px'; 
-
-  document.getElementById('myImg04').style.left = (screenWidth - enemyWidth) + 'px';  
-  document.getElementById('myImg04').style.top = '390px'; 
+  document.getElementById('myImg02').style.left = (screenWidth - enemyWidth) + 'px';  // Always place the enemy at the right edge
+  document.getElementById('myImg02').style.top = '190px'; // Optionally, reset enemy vertical position
 }
 
 // Continuously update movement
