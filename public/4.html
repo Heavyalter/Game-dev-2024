@@ -76,13 +76,13 @@ function moveWithWASD(event) {
 
   // Move the character based on the key pressed
   if (myKey == 'w' || myKey == 'W') {
-    character.style.top = (top - 10) + 'px'; // Move up
+    character.style.top = (top - 5) + 'px'; // Smooth move up
   } else if (myKey == 'a' || myKey == 'A') {
-    character.style.left = (left - 10) + 'px'; // Move left
+    character.style.left = (left - 5) + 'px'; // Smooth move left
   } else if (myKey == 's' || myKey == 'S') {
-    character.style.top = (top + 10) + 'px'; // Move down
+    character.style.top = (top + 5) + 'px'; // Smooth move down
   } else if (myKey == 'd' || myKey == 'D') {
-    character.style.left = (left + 10) + 'px'; // Move right
+    character.style.left = (left + 5) + 'px'; // Smooth move right
   }
 
   // Update the key pressed info on the screen
@@ -104,15 +104,15 @@ function moveEnemyTowardsPlayer() {
 
   // Move the enemy towards the player
   if (enemyLeft < playerLeft) {
-    enemy.style.left = (enemyLeft + 1) + 'px'; // Move enemy right towards player
+    enemy.style.left = (enemyLeft + 1) + 'px'; // Smooth move right towards player
   } else if (enemyLeft > playerLeft) {
-    enemy.style.left = (enemyLeft - 1) + 'px'; // Move enemy left towards player
+    enemy.style.left = (enemyLeft - 1) + 'px'; // Smooth move left towards player
   }
 
   if (enemyTop < playerTop) {
-    enemy.style.top = (enemyTop + 1) + 'px'; // Move enemy down towards player
+    enemy.style.top = (enemyTop + 1) + 'px'; // Smooth move down towards player
   } else if (enemyTop > playerTop) {
-    enemy.style.top = (enemyTop - 1) + 'px'; // Move enemy up towards player
+    enemy.style.top = (enemyTop - 1) + 'px'; // Smooth move up towards player
   }
 
   // Check for collisions after enemy movement
@@ -124,37 +124,7 @@ setInterval(moveEnemyTowardsPlayer, 10);
 
 // Simple inline keydown event handlers for WASD
 window.onkeydown = moveWithWASD;
-
 </script>
-
-<!-- Buttons to move background -->
-<input type=button value="Auto Background Left" onclick="{
-  clearInterval(myClock);
-  let myTemp = '100px 0px';
-  myClock = setInterval(function(){
-      myGlobalX -= 5;
-      myTemp =  myGlobalX + 'px 0px';
-      document.getElementById('myBody').style.backgroundPosition = myTemp;
-  }, 100);
-}">
-
-<input type=button value="Right" onclick="{
-  document.getElementById('myImg01').style.left = parseInt(document.getElementById('myImg01').style.left) + 10 + 'px';
-  myCheckHit();
-}">
-
-<input type=button value="Down" onclick="{
-  document.getElementById('myImg01').style.top = parseInt(document.getElementById('myImg01').style.top) + 10 + 'px';
-  myCheckHit();
-}">
-
-<input type=button value="Auto Right" onclick="{
-  clearInterval(myTimer01);
-  myTimer01 = setInterval(function(){
-     document.getElementById('myImg01').style.left = parseInt(document.getElementById('myImg01').style.left) + 10 + 'px';
-     myCheckHit();
-  }, 50);
-}"><br><br>
 
 <!-- Images -->
 <img id="myImg01" src="myImgNew.jpg" title="myImg01" style="position:absolute; width:100px; height:80px; left: 50px; top:190px;">
