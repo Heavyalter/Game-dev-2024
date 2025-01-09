@@ -54,9 +54,14 @@ function myCheckHit() {
   let enemyRight = parseInt(document.getElementById('myImg02').style.left) + 100; // 100 is the width of myImg02
   if (playerLeft > enemyRight) {
     alert('You passed the enemy! You win!');
+    
+    // Reset the player's position
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
-    
+
+    // Reset the enemy's position to the opposite end
+    resetEnemy();
+
     // Reset the keys held state after winning
     resetKeys();
   }
@@ -78,10 +83,10 @@ function moveWithWASD() {
   let top = parseInt(character.style.top || '0');
 
   // Move the character based on the held keys
-  if (keysHeld['w']) character.style.top = (top - 5) + 'px'; // Move up
-  if (keysHeld['a']) character.style.left = (left - 5) + 'px'; // Move left
-  if (keysHeld['s']) character.style.top = (top + 5) + 'px'; // Move down
-  if (keysHeld['d']) character.style.left = (left + 5) + 'px'; // Move right
+  if (keysHeld['w']) character.style.top = (top - 2) + 'px'; // Move up slower
+  if (keysHeld['a']) character.style.left = (left - 2) + 'px'; // Move left slower
+  if (keysHeld['s']) character.style.top = (top + 2) + 'px'; // Move down slower
+  if (keysHeld['d']) character.style.left = (left + 2) + 'px'; // Move right slower
 
   // Update the key pressed info on the screen
   document.getElementById('myDiv01').innerHTML = 'You pressed: ' + Object.keys(keysHeld).filter(key => keysHeld[key]).join(', ');
@@ -138,6 +143,18 @@ window.onkeyup = function(event) {
 function resetKeys() {
   keysHeld = { w: false, a: false, s: false, d: false };
   document.getElementById('myDiv01').innerHTML = 'You pressed: ';
+}
+
+// Function to reset the enemy's position to the opposite side
+function resetEnemy() {
+  let enemy = document.getElementById('myImg02');
+  if (parseInt(enemy.style.left) < window.innerWidth / 2) {
+    // If the enemy is on the left side, move it to the right side
+    enemy.style.left = window.innerWidth - enemy.width + 'px';
+  } else {
+    // If the enemy is on the right side, move it to the left side
+    enemy.style.left = '0px';
+  }
 }
 
 // Continuously update movement
