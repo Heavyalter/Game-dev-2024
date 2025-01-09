@@ -38,18 +38,18 @@ function myHitOther(my1, my2) {
 }
 
 function myCheckHit() {
-  if (myHitOther('myImg01', 'myImg02')) {
+  if (myHitOther('myImg01', 'myImg02') || myHitOther('myImg01', 'myImg03') || myHitOther('myImg01', 'myImg04')) {
     // Reset the player's position and the enemy's position if they collide
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
-    resetEnemy(); // Reset enemy to the right edge
-    alert('You collided with the enemy! Game reset.');
+    resetEnemies(); // Reset enemies to the right edge
+    alert('You collided with an enemy! Game reset.');
 
     // Reset the keys held state after collision
     resetKeys();
   }
 
-  // Check if the player has passed the enemy
+  // Check if the player has passed the enemies
   let playerLeft = parseInt(document.getElementById('myImg01').style.left);
   let enemyRight = parseInt(document.getElementById('myImg02').style.left) + enemyWidth; // 100 is the width of myImg02
   if (playerLeft > enemyRight) {
@@ -59,8 +59,8 @@ function myCheckHit() {
     document.getElementById('myImg01').style.left = '20px';
     document.getElementById('myImg01').style.top = '190px';
 
-    // Reset the enemy's position to the right edge
-    resetEnemy();
+    // Reset the enemies' positions to the right edge
+    resetEnemies();
 
     // Reset the keys held state after winning
     resetKeys();
@@ -91,9 +91,9 @@ function moveWithWASD() {
   myCheckHit();
 }
 
-// Move enemy slowly towards the player
-function moveEnemyTowardsPlayer() {
-  let enemy = document.getElementById('myImg02');
+// Move enemy towards the player (generalized for all enemies)
+function moveEnemyTowardsPlayer(enemyId) {
+  let enemy = document.getElementById(enemyId);
   let player = document.getElementById('myImg01');
 
   let enemyLeft = parseInt(enemy.style.left);
@@ -101,17 +101,20 @@ function moveEnemyTowardsPlayer() {
   let enemyTop = parseInt(enemy.style.top);
   let playerTop = parseInt(player.style.top);
 
-  // Move the enemy towards the player
+  // Move the enemy towards the player with small random variations for randomness
+  let moveX = Math.random() * 2 - 1;  // Small random movement (-1 to 1)
+  let moveY = Math.random() * 2 - 1;  // Small random movement (-1 to 1)
+
   if (enemyLeft < playerLeft) {
-    enemy.style.left = (enemyLeft + 1) + 'px'; // Smooth move right towards player
+    enemy.style.left = (enemyLeft + moveX) + 'px';
   } else if (enemyLeft > playerLeft) {
-    enemy.style.left = (enemyLeft - 1) + 'px'; // Smooth move left towards player
+    enemy.style.left = (enemyLeft - moveX) + 'px';
   }
 
   if (enemyTop < playerTop) {
-    enemy.style.top = (enemyTop + 1) + 'px'; // Smooth move down towards player
+    enemy.style.top = (enemyTop + moveY) + 'px';
   } else if (enemyTop > playerTop) {
-    enemy.style.top = (enemyTop - 1) + 'px'; // Smooth move up towards player
+    enemy.style.top = (enemyTop - moveY) + 'px';
   }
 
   // Check for collisions after enemy movement
@@ -119,7 +122,11 @@ function moveEnemyTowardsPlayer() {
 }
 
 // Start the enemy movement when the page loads
-setInterval(moveEnemyTowardsPlayer, 10);
+setInterval(function() {
+  moveEnemyTowardsPlayer('myImg02');
+  moveEnemyTowardsPlayer('myImg03');
+  moveEnemyTowardsPlayer('myImg04');
+}, 10);
 
 // Handle keydown for continuous movement
 window.onkeydown = function(event) {
@@ -141,11 +148,18 @@ function resetKeys() {
   document.getElementById('myDiv01').innerHTML = 'You pressed: ';
 }
 
-// Function to reset the enemy's position to the right edge
-function resetEnemy() {
+// Function to reset all enemies' positions to the right edge
+function resetEnemies() {
   const screenWidth = window.innerWidth;
-  document.getElementById('myImg02').style.left = (screenWidth - enemyWidth) + 'px';  // Always place the enemy at the right edge
-  document.getElementById('myImg02').style.top = '190px'; // Optionally, reset enemy vertical position
+  // Reset each enemy to spawn at the right edge
+  document.getElementById('myImg02').style.left = (screenWidth - enemyWidth) + 'px';  
+  document.getElementById('myImg02').style.top = '190px'; 
+
+  document.getElementById('myImg03').style.left = (screenWidth - enemyWidth) + 'px';  
+  document.getElementById('myImg03').style.top = '290px'; 
+
+  document.getElementById('myImg04').style.left = (screenWidth - enemyWidth) + 'px';  
+  document.getElementById('myImg04').style.top = '390px'; 
 }
 
 // Continuously update movement
